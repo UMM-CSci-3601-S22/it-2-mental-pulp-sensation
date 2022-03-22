@@ -1,0 +1,36 @@
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+
+    <mat-card class="search-card">
+      <mat-card-title class="product-list-title">Products</mat-card-title>
+      <mat-card-content fxLayout="column" >
+
+        <div fxLayout="row wrap" fxLayoutGap="10px">
+
+          <mat-form-field class="input-field">
+            <mat-label>Name</mat-label>
+            <input matInput data-test="productNameInput" placeholder="Filter by product name"
+            [(ngModel)]="productName" (input)="updateFilter()">
+            <mat-hint>Search for product by name</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+        <button fxFlexOffset.gt-sm="1" mat-fab class="add-product-fab" matTooltip="Add a product" matTooltipPosition="right" routerLink="/products/new" data-test="addProductButton">
+          <mat-icon class="md-24" aria-label="Add Product">add</mat-icon>
+        </button>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<mat-nav-list class="product-nav-list">
+  <h3 mat-subheader>Products</h3>
+  <a mat-list-item *ngFor="let product of this.filteredProducts" [routerLink]="['/products', product._id]" class="product-list-item">
+    <h3 matLine class="product-list-name">{{product.name}}</h3>
+    <h4 matLine class="product-list-brand">{{product.brand}}</h4>
+    <h4 matLine class="product-list-store">{{product.store}}</h4>
+    <p matLine class="product-list-description">{{product.description}}</p>
+  </a>
+</mat-nav-list>

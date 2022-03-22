@@ -1,0 +1,110 @@
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+    <form [formGroup]="addProductForm" (ngSubmit)="submitForm();">
+    <mat-card class="add-product-card">
+
+      <mat-card-header>
+        <mat-card-title class="add-product-title">New Product</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content fxLayout="column">
+        <mat-form-field>
+          <mat-label>Product</mat-label>
+          <input matInput placeholder="Name" formControlName="name" required>
+          <mat-error *ngFor="let validation of addProductValidationMessages.name">
+            <mat-error class="error-message" data-test="nameError"
+                *ngIf="addProductForm.get('name').hasError(validation.type) && (addProductForm.get('name').dirty || addProductForm.get('name').touched)">
+                {{validation.message}}
+              </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Brand</mat-label>
+          <input matInput placeholder="Brand" formControlName="brand" required>
+          <mat-error *ngFor="let validation of addProductValidationMessages.brand">
+            <mat-error class="error-message" data-test="brandError"
+                *ngIf="addProductForm.get('brand').hasError(validation.type) && (addProductForm.get('brand').dirty || addProductForm.get('brand').touched)">
+                {{validation.message}}
+              </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Store</mat-label>
+          <input matInput placeholder="Store" formControlName="store" required>
+          <mat-error *ngFor="let validation of addProductValidationMessages.store">
+            <mat-error class="error-message" data-test="storeError"
+                *ngIf="addProductForm.get('store').hasError(validation.type) && (addProductForm.get('store').dirty || addProductForm.get('store').touched)">
+                {{validation.message}}
+              </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Lifespan</mat-label>
+          <input matInput placeholder="Lifespan" formControlName="lifespan">
+          <mat-error *ngFor="let validation of addProductValidationMessages.lifespan">
+            <mat-error class="error-message" data-test="lifespanError"
+                *ngIf="addProductForm.get('lifespan').hasError(validation.type) && (addProductForm.get('lifespan').dirty || addProductForm.get('lifespan').touched)">
+                {{validation.message}}
+              </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Threshold</mat-label>
+          <input matInput placeholder="Threshold" formControlName="threshold">
+          <mat-error *ngFor="let validation of addProductValidationMessages.threshold">
+            <mat-error class="error-message" data-test="thresholdError"
+                *ngIf="addProductForm.get('threshold').hasError(validation.type) && (addProductForm.get('threshold').dirty || addProductForm.get('threshold').touched)">
+                {{validation.message}}
+              </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput placeholder="Description"
+                formControlName="description">
+          <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Category</mat-label>
+          <input matInput placeholder="Category"
+                formControlName="category">
+          <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Location</mat-label>
+          <input matInput placeholder="Location"
+                formControlName="location">
+          <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Notes</mat-label>
+          <input matInput placeholder="Notes"
+                formControlName="notes">
+          <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
+        </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button
+        mat-button
+        type="button"
+        color="primary"
+        [disabled]="!addProductForm.valid"
+        type="submit"
+        data-test="confirmAddProductButton"
+        >
+        ADD Product
+      </button>
+      </mat-card-actions>
+    </mat-card>
+    </form>
+  </div>
+</div>
