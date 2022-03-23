@@ -13,7 +13,6 @@ import org.bson.UuidRepresentation;
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.InternalServerErrorResponse;
-import umm3601.user.UserController;
 import umm3601.product.ProductController;
 
 public class Server {
@@ -42,7 +41,6 @@ public class Server {
     MongoDatabase database = mongoClient.getDatabase(databaseName);
 
     // Initialize dependencies
-    UserController userController = new UserController(database);
 
     ProductController productController = new ProductController(database);
 
@@ -63,21 +61,6 @@ public class Server {
     Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
 
     server.start(SERVER_PORT);
-
-    // List users, filtered using query parameters
-    server.get("/api/users", userController::getUsers);
-
-    // Get the specified user
-    server.get("/api/users/{id}", userController::getUser);
-
-    // Delete the specified user
-    server.delete("/api/users/{id}", userController::deleteUser);
-
-    // Add new user with the user info being in the JSON body
-    // of the HTTP request
-    server.post("/api/users", userController::addNewUser);
-
-
 
     server.get("/api/products", productController::getProducts);
 
