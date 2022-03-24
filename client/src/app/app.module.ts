@@ -32,6 +32,8 @@ import { ProductListComponent } from './products/product-list.component';
 import { ProductCardComponent } from './products/product-card.component';
 import { ProductService } from './products/product.service';
 import { AddProductComponent } from './products/add-product.component';
+import { ShoppingListListComponent } from './shoppingList/shopping-list-list/shopping-list-list.component';
+import { ShoppingListService } from './shoppingList/shopping-list-list/shoppingList.service';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -61,6 +63,7 @@ const MATERIAL_MODULES: any[] = [
     ProductListComponent,
     ProductCardComponent,
     AddProductComponent,
+    ShoppingListListComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,7 @@ const MATERIAL_MODULES: any[] = [
   ],
   providers: [
 
-    ProductService,
+    ProductService,ShoppingListService
   ],
   bootstrap: [AppComponent]
 })

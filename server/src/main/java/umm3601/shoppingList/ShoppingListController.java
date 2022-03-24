@@ -33,6 +33,7 @@ public class ShoppingListController {
   private static final String QUANTITY_KEY = "quantity";
   private static final String PRODUCTNAME_KEY = "productName";
   private static final String STORE_KEY = "store";
+  private static final String PROD_KEY = "prodID";
 
   private final JacksonMongoCollection<ShoppingList> shoppingListCollection;
 
@@ -80,7 +81,8 @@ public class ShoppingListController {
     Bson sortingOrder = constructSortingOrder(ctx);
 
     // All three of the find, sort, and into steps happen "in parallel" inside the
-    // database system. So MongoDB is going to find the shoppingLists with the specified
+    // database system. So MongoDB is going to find the shoppingLists with the
+    // specified
     // properties, return those sorted in the specified manner, and put the
     // results into an initially empty ArrayList.
     ArrayList<ShoppingList> matchingShoppingLists = shoppingListCollection
@@ -102,8 +104,11 @@ public class ShoppingListController {
       filters.add(eq(STORE_KEY, ctx.queryParam(STORE_KEY)));
     }
     if (ctx.queryParamMap().containsKey(QUANTITY_KEY)) {
-        int targetQuantity = ctx.queryParamAsClass(QUANTITY_KEY, Integer.class).get();
-        filters.add(eq(QUANTITY_KEY, targetQuantity));
+      int targetQuantity = ctx.queryParamAsClass(QUANTITY_KEY, Integer.class).get();
+      filters.add(eq(QUANTITY_KEY, targetQuantity));
+    }
+    if (ctx.queryParamMap().containsKey(PROD_KEY)) {
+      filters.add(eq(PROD_KEY, ctx.queryParam(PROD_KEY)));
     }
 
     // Combine the list of filters into a single filtering document.
@@ -143,9 +148,11 @@ public class ShoppingListController {
         .check(usr -> usr.productName != null && usr.productName.length() > 0,
             "ShoppingList must have a non-empty shoppingList name")
         .check(usr -> usr.store != null && usr.store.matches("^(willies|coop)$"),
-         "Item must have a legal store")
+            "Item must have a legal store")
         .check(usr -> usr.quantity > 0,
             "ShoppingList Quantity must be greater than zero")
+        .check(usr -> usr.prodID != null && usr.prodID.length() > 0,
+            "Pantry must have a non-empty pantry name")
         .get();
 
     shoppingListCollection.insertOne(newShoppingList);

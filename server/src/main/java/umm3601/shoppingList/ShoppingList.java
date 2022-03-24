@@ -27,8 +27,9 @@ public class ShoppingList {
   // name of the field as used by MongoDB.
   @SuppressWarnings({"MemberName"})
   public String _id;
+  public String prodID;
 
   public String productName;
   public String store;
-  public int quantity;
+  public int quantity; // how much user needs to buy.
 }
