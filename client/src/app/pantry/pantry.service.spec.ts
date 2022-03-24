@@ -74,23 +74,10 @@ describe('Pantry service: ', () => {
   it('getPantrys() calls api/pantry with multiple filter parameters', () => {
 
     pantryService.getPantrys({
-      prodID: 'bruh',import { TestBed } from '@angular/core/testing';
-
-      import { PantryService } from './pantry.service';
-      
-      describe('PantryService', () => {
-        let service: PantryService;
-      
-        beforeEach(() => {
-          TestBed.configureTestingModule({});
-          service = TestBed.inject(PantryService);
-        });
-      
-        it('should be created', () => {
-          expect(service).toBeTruthy();
-        });
-      });
-      
+      prodID: 'bruh',
+      date: 'May 15, 2022',
+      name: 'Chris'
+    }).subscribe(
       pantry => expect(pantry).toBe(testPantrys)
     );
 
@@ -161,6 +148,6 @@ describe('Pantry service: ', () => {
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(testPantrys[1]);
 
-    req.flush({id: 'testid'});
+    req.flush({ id: 'testid' });
   });
 });
