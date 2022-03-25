@@ -10,6 +10,8 @@ import java.util.Map;
 import com.mongodb.client.MongoDatabase;
 // import com.mongodb.client.model.Sorts;
 // import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 
 import org.bson.Document;
 import org.bson.UuidRepresentation;
@@ -83,6 +85,8 @@ public class ProductController {
   }
 
   public void addNewProduct(Context ctx) {
+    Bson filter = Filters.eq("name", "Beef Ground Medium");
+    Bson update = Updates.set("brand", "please work eufawejifa");
     /*
      * The follow chain of statements uses the Javalin validator system
      * to verify that instance of `Product` provided in this context is
@@ -101,7 +105,9 @@ public class ProductController {
       .get();
 
     productCollection.insertOne(newProduct);
-
+    System.err.println("do we get here?");
+    productCollection.findOneAndUpdate(filter, update);
+    System.err.println("How about after?");
     // 201 is the HTTP code for when we successfully
     // create a new resource (a product in this case).
     // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
