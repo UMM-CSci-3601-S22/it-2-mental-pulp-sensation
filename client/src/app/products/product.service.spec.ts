@@ -8,7 +8,7 @@ describe('Product service:', () => {
   const testProducts: Product[] = [
     {
       _id: 'apple_id',
-      name:'Apple',
+      name: 'Apple',
       brand: 'UMM',
       description: 'apples from UMM',
       category: 'fruit',
@@ -16,14 +16,14 @@ describe('Product service:', () => {
     },
     {
       _id: 'grape_id',
-      name:'Grape',
+      name: 'Grape',
       brand: 'UMM',
       category: 'fruit',
       notes: 'Grapes are cooler than apple'
     },
     {
       _id: 'potato_id',
-      name:'Potato',
+      name: 'Potato',
       brand: 'Conner\'s Potatoes',
       description: 'Potatoes from Conner\'s potato farm',
       notes: 'These happen to be 12 of Conner\'s potatoes'
@@ -53,38 +53,51 @@ describe('Product service:', () => {
   });
 
 
-it('getProducts() calls api/products', () => {
-  productService.getProducts().subscribe(
-    products => expect(products).toBe(testProducts)
-  );
+  it('getProducts() calls api/products', () => {
+    productService.getProducts().subscribe(
+      products => expect(products).toBe(testProducts)
+    );
 
-  const req = httpTestingController.expectOne(productService.productUrl);
+    const req = httpTestingController.expectOne(productService.productUrl);
 
-  expect(req.request.method).toEqual('GET');
+    expect(req.request.method).toEqual('GET');
 
-  req.flush(testProducts);
-});
+    req.flush(testProducts);
+  });
 
-it('getProducts() calls api/products with filter param \'name\'', () => {
-  productService.getProducts({name: 'Apple'}).subscribe(
-    products => expect(products).toBe(testProducts)
-  );
+  it('getProducts() calls api/products with filter param \'name\'', () => {
+    productService.getProducts({ name: 'Apple' }).subscribe(
+      products => expect(products).toBe(testProducts)
+    );
 
-  const req = httpTestingController.expectOne(
-  (request) => request.url.startsWith(productService.productUrl) && request.params.has('name'));
+    const req = httpTestingController.expectOne(
+      (request) => request.url.startsWith(productService.productUrl) && request.params.has('name'));
 
-  expect(req.request.method).toEqual('GET');
+    expect(req.request.method).toEqual('GET');
 
-  expect(req.request.params.get('name')).toEqual('Apple');
+    expect(req.request.params.get('name')).toEqual('Apple');
 
-  req.flush(testProducts);
-});
+    req.flush(testProducts);
+  });
 
 
-it('filterProducts() filters by name', () => {
-  expect(testProducts.length).toBe(3);
-  const productName = 'a';
-  expect(productService.filterProducts(testProducts, {name: productName }).length).toBe(3);
-});
+  it('filterProducts() filters by name', () => {
+    expect(testProducts.length).toBe(3);
+    const productName = 'a';
+    expect(productService.filterProducts(testProducts, { name: productName }).length).toBe(3);
+  });
+
+  it('addProduct posts to api/products', () => {
+
+    productService.addProduct(testProducts[1]).subscribe(
+      id => expect(id).toBe('testid')
+    );
+    const req = httpTestingController.expectOne(productService.productUrl);
+
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body).toEqual(testProducts[1]);
+
+    req.flush({ id: 'testid' });
+  });
 
 });

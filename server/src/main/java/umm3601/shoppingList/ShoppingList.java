@@ -1,4 +1,4 @@
-package umm3601.user;
+package umm3601.shoppingList;
 
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
@@ -19,7 +19,7 @@ import org.mongojack.ObjectId;
 // check in CheckStyle so that we don't get a failed
 // build when Gradle runs CheckStyle.
 @SuppressWarnings({"VisibilityModifier"})
-public class User {
+public class ShoppingList {
 
   @ObjectId @Id
   // By default Java field names shouldn't start with underscores.
@@ -28,10 +28,7 @@ public class User {
   @SuppressWarnings({"MemberName"})
   public String _id;
 
-  public String name;
-  public int age;
-  public String company;
-  public String email;
-  public String avatar;
-  public String role;
+  public String productName;
+  public String store;
+  public int quantity;
 }

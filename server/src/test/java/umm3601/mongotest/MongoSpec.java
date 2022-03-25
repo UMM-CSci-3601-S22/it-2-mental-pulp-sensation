@@ -44,7 +44,7 @@ import org.junit.jupiter.api.Test;
  * they test that code, and perhaps our understanding of it.
  * <p>
  * To test "our" code we'd want the tests to confirm that
- * the behavior of methods in things like the UserController
+ * the behavior of methods in things like the Controller
  * do the "right" thing.
  */
 // The tests here include a ton of "magic numbers" (numeric constants).
@@ -57,7 +57,7 @@ import org.junit.jupiter.api.Test;
 @SuppressWarnings({"MagicNumber"})
 public class MongoSpec {
 
-  private MongoCollection<Document> userDocuments;
+  private MongoCollection<Document> productDocuments;
 
   private static MongoClient mongoClient;
   private static MongoDatabase db;
@@ -83,67 +83,67 @@ public class MongoSpec {
 
   @BeforeEach
   public void clearAndPopulateDB() {
-    userDocuments = db.getCollection("users");
-    userDocuments.drop();
-    List<Document> testUsers = new ArrayList<>();
-    testUsers.add(
+    productDocuments = db.getCollection("products");
+    productDocuments.drop();
+    List<Document> testProducts = new ArrayList<>();
+    testProducts.add(
       new Document()
         .append("name", "Chris")
         .append("age", 25)
         .append("company", "UMM")
         .append("email", "chris@this.that"));
-    testUsers.add(
+    testProducts.add(
       new Document()
         .append("name", "Pat")
         .append("age", 37)
         .append("company", "IBM")
         .append("email", "pat@something.com"));
-    testUsers.add(
+    testProducts.add(
       new Document()
         .append("name", "Jamie")
         .append("age", 37)
         .append("company", "Frogs, Inc.")
         .append("email", "jamie@frogs.com"));
 
-    userDocuments.insertMany(testUsers);
+    productDocuments.insertMany(testProducts);
   }
 
   private List<Document> intoList(MongoIterable<Document> documents) {
-    List<Document> users = new ArrayList<>();
-    documents.into(users);
-    return users;
+    List<Document> products = new ArrayList<>();
+    documents.into(products);
+    return products;
   }
 
-  private int countUsers(FindIterable<Document> documents) {
-    List<Document> users = intoList(documents);
-    return users.size();
+  private int countProducts(FindIterable<Document> documents) {
+    List<Document> products = intoList(documents);
+    return products.size();
   }
 
   @Test
-  public void shouldBeThreeUsers() {
-    FindIterable<Document> documents = userDocuments.find();
-    int numberOfUsers = countUsers(documents);
-    assertEquals(3, numberOfUsers, "Should be 3 total users");
+  public void shouldBeThreeProducts() {
+    FindIterable<Document> documents = productDocuments.find();
+    int numberOfProducts = countProducts(documents);
+    assertEquals(3, numberOfProducts, "Should be 3 total products");
   }
 
   @Test
   public void shouldBeOneChris() {
-    FindIterable<Document> documents = userDocuments.find(eq("name", "Chris"));
-    int numberOfUsers = countUsers(documents);
-    assertEquals(1, numberOfUsers, "Should be 1 Chris");
+    FindIterable<Document> documents = productDocuments.find(eq("name", "Chris"));
+    int numberOfProducts = countProducts(documents);
+    assertEquals(1, numberOfProducts, "Should be 1 Chris");
   }
 
   @Test
   public void shouldBeTwoOver25() {
-    FindIterable<Document> documents = userDocuments.find(gt("age", 25));
-    int numberOfUsers = countUsers(documents);
-    assertEquals(2, numberOfUsers, "Should be 2 over 25");
+    FindIterable<Document> documents = productDocuments.find(gt("age", 25));
+    int numberOfProducts = countProducts(documents);
+    assertEquals(2, numberOfProducts, "Should be 2 over 25");
   }
 
   @Test
   public void over25SortedByName() {
     FindIterable<Document> documents
-      = userDocuments.find(gt("age", 25))
+      = productDocuments.find(gt("age", 25))
       .sort(Sorts.ascending("name"));
     List<Document> docs = intoList(documents);
     assertEquals(2, docs.size(), "Should be 2");
@@ -154,7 +154,7 @@ public class MongoSpec {
   @Test
   public void over25AndIbmers() {
     FindIterable<Document> documents
-      = userDocuments.find(and(gt("age", 25),
+      = productDocuments.find(and(gt("age", 25),
       eq("company", "IBM")));
     List<Document> docs = intoList(documents);
     assertEquals(1, docs.size(), "Should be 1");
@@ -164,7 +164,7 @@ public class MongoSpec {
   @Test
   public void justNameAndEmail() {
     FindIterable<Document> documents
-      = userDocuments.find().projection(fields(include("name", "email")));
+      = productDocuments.find().projection(fields(include("name", "email")));
     List<Document> docs = intoList(documents);
     assertEquals(3, docs.size(), "Should be 3");
     assertEquals("Chris", docs.get(0).get("name"), "First should be Chris");
@@ -176,7 +176,7 @@ public class MongoSpec {
   @Test
   public void justNameAndEmailNoId() {
     FindIterable<Document> documents
-      = userDocuments.find()
+      = productDocuments.find()
       .projection(fields(include("name", "email"), excludeId()));
     List<Document> docs = intoList(documents);
     assertEquals(3, docs.size(), "Should be 3");
@@ -189,7 +189,7 @@ public class MongoSpec {
   @Test
   public void justNameAndEmailNoIdSortedByCompany() {
     FindIterable<Document> documents
-      = userDocuments.find()
+      = productDocuments.find()
       .sort(Sorts.ascending("company"))
       .projection(fields(include("name", "email"), excludeId()));
     List<Document> docs = intoList(documents);
@@ -203,7 +203,7 @@ public class MongoSpec {
   @Test
   public void ageCounts() {
     AggregateIterable<Document> documents
-      = userDocuments.aggregate(
+      = productDocuments.aggregate(
       Arrays.asList(
         /*
          * Groups data by the "age" field, and then counts
@@ -228,7 +228,7 @@ public class MongoSpec {
   @Test
   public void averageAge() {
     AggregateIterable<Document> documents
-      = userDocuments.aggregate(
+      = productDocuments.aggregate(
       Arrays.asList(
         Aggregates.group("$company",
           Accumulators.avg("averageAge", "$age")),

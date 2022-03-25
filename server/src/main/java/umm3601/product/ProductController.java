@@ -103,7 +103,7 @@ public class ProductController {
     productCollection.insertOne(newProduct);
 
     // 201 is the HTTP code for when we successfully
-    // create a new resource (a user in this case).
+    // create a new resource (a product in this case).
     // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);

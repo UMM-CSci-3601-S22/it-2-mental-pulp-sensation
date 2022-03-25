@@ -24,19 +24,18 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { UserListComponent } from './users/user-list.component';
 import { HomeComponent } from './home/home.component';
-import { UserService } from './users/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
-import { UserCardComponent } from './users/user-card.component';
-import { UserProfileComponent } from './users/user-profile.component';
-import { AddUserComponent } from './users/add-user.component';
 import { ProductProfileComponent } from './products//product-profile.component';
 import { ProductListComponent } from './products/product-list.component';
 import { ProductCardComponent } from './products/product-card.component';
 import { ProductService } from './products/product.service';
 import { AddProductComponent } from './products/add-product.component';
+import { PantryCardComponent } from './pantry/pantry-card/pantry-card.component';
+import { PantryListComponent } from './pantry/pantry-list/pantry-list.component';
+import { PantryProfileComponent } from './pantry/pantry-profile/pantry-profile.component';
+import { PantryService } from './pantry/pantry.service';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -61,15 +60,14 @@ const MATERIAL_MODULES: any[] = [
   declarations: [
     AppComponent,
     HomeComponent,
-    UserListComponent,
-    UserCardComponent,
-    UserProfileComponent,
-    AddUserComponent,
     AddProductComponent,
     ProductProfileComponent,
     ProductListComponent,
     ProductCardComponent,
     AddProductComponent,
+    PantryCardComponent,
+    PantryListComponent,
+    PantryProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -83,8 +81,9 @@ const MATERIAL_MODULES: any[] = [
     LayoutModule,
   ],
   providers: [
-    UserService,
+
     ProductService,
+    PantryService,
   ],
   bootstrap: [AppComponent]
 })
