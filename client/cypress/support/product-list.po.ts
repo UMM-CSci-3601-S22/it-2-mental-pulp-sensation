@@ -1,5 +1,3 @@
-
-
 export class ProductListPage {
   navigateTo() {
     return cy.visit('/products');

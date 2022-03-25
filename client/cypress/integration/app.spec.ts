@@ -17,7 +17,7 @@ describe('App', () => {
       .should('be.visible');
 
       page.getSidenavButton().click();
-    page.getNavLink('Pantry').click();
+    page.getNavLink('Product').click();
     cy.url().should('match', /\/products$/);
     page.getSidenav()
       .should('be.hidden');
@@ -25,6 +25,12 @@ describe('App', () => {
     page.getSidenavButton().click();
     page.getNavLink('Home').click();
     cy.url().should('match', /^https?:\/\/[^\/]+\/?$/);
+    page.getSidenav()
+      .should('be.hidden');
+
+      page.getSidenavButton().click();
+    page.getNavLink('Pantry').click();
+    cy.url().should('match', /\/pantry$/);
     page.getSidenav()
       .should('be.hidden');
   });
