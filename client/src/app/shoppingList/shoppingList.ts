@@ -6,6 +6,4 @@ prodID: string;
 productName: string;
 store: string;
 quantity: number;
-
-
 }

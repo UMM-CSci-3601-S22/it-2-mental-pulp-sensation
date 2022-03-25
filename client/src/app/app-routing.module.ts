@@ -16,9 +16,9 @@ const routes: Routes = [
   {path: 'products', component: ProductListComponent},
   {path: 'products/new', component: AddProductComponent},
   {path: 'products/:id', component: ProductProfileComponent},
-  {path: 'shoppingList', component: ShoppingListListComponent}
+  {path: 'shoppingList', component: ShoppingListListComponent},
   {path: 'pantry', component: PantryListComponent},
-  {path: 'pantry/:id', component: PantryProfileComponent}
+  {path: 'pantry/:id', component: PantryProfileComponent},
 ];
 
 @NgModule({

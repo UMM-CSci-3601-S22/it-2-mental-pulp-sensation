@@ -1,30 +1,30 @@
 <div fxLayout="row">
     <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
-  
+
       <mat-card class="search-card">
-        <mat-card-title class="shoppingList-list-title">ShoppingList</mat-card-title>
+        <mat-card-title class="shoppingList-list-title">Shopping List</mat-card-title>
         <mat-card-content fxLayout="column" >
-  
+
           <div fxLayout="row wrap" fxLayoutGap="10px">
-  
+
             <mat-form-field class="input-field">
               <mat-label>Name</mat-label>
-              <input matInput data-test="shoopingListNameInput" placeholder="Filter by item name"
-              [(ngModel)]="itemName">
+              <input matInput data-test="shoppingListNameInput" placeholder="Filter by item name"
+              [(ngModel)]="itemName" (input) = "getItemsFromServer">
               <mat-hint>Search for an item by name</mat-hint>
             </mat-form-field>
-  
+
           </div>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
-  
-  <mat-nav-list class="shoppingList-nav-list">
+
+  <mat-list class="shoppingList-list">
     <h3 mat-subheader>Items</h3>
-    <a mat-list-item *ngFor="let shoppingList of this.FilteredShoppingList" [routerLink]="['/shoppingList', shoppingList._id]" class="product-list-item">
+    <a mat-list-item *ngFor="let shoppingList of this.filteredShoppingList" class="product-list-item">
       <h3 matLine class="product-list-name">{{shoppingList.productName}}</h3>
       <h4 matLine class="product-list-store">{{shoppingList.store}}</h4>
       <p matLine class="product-list-description">{{shoppingList.quantity}}</p>
     </a>
-  </mat-nav-list>
+  </mat-list>

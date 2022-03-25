@@ -11,7 +11,8 @@ import { ShoppingListService } from './shoppingList.service';
 
 export class ShoppingListListComponent implements OnInit {
 
-  public FilteredShoppingList: ShoppingList[];
+  public filteredShoppingList: ShoppingList[];
+  public serverFilteredShoppingList: ShoppingList[];
 
   // instead of typing shopping list i'm going to replace it with item
   public itemName: string;
@@ -26,12 +27,17 @@ export class ShoppingListListComponent implements OnInit {
   getItemsFromServer(): void {
     this.unsub();
     this.getItemsSub = this.shoppingListService.getShoppingList({
-      name: this.itemName
+      productName: this.itemName
     }).subscribe(returnedShoppingList => {
-      this.FilteredShoppingList = returnedShoppingList;
+      this.filteredShoppingList = returnedShoppingList;
+      this.updateFilter();
     }, err => {
       console.log(err);
     });
+  }
+  public updateFilter(): void {
+    this.filteredShoppingList = this.shoppingListService.filterShoppingList(
+      this.serverFilteredShoppingList, {name: this.itemName});
   }
 
   ngOnInit(): void {
