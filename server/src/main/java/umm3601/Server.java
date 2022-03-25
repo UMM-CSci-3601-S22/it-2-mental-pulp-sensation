@@ -28,13 +28,14 @@ public class Server {
     String databaseName = System.getenv().getOrDefault("MONGO_DB", "dev");
 
     // Setup the MongoDB client object with the information we set earlier
-    MongoClient mongoClient
-      = MongoClients.create(MongoClientSettings
+    MongoClient mongoClient = MongoClients.create(MongoClientSettings
         .builder()
         .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress(mongoAddr))))
-        // Old versions of the mongodb-driver-sync package encoded UUID values (universally unique identifiers) in
+        // Old versions of the mongodb-driver-sync package encoded UUID values
+        // (universally unique identifiers) in
         // a non-standard way. This option says to use the standard encoding.
-        // See: https://studio3t.com/knowledge-base/articles/mongodb-best-practices-uuid-data/
+        // See:
+        // https://studio3t.com/knowledge-base/articles/mongodb-best-practices-uuid-data/
         .uuidRepresentation(UuidRepresentation.STANDARD)
         .build());
 
@@ -46,9 +47,7 @@ public class Server {
     ProductController productController = new ProductController(database);
     PantryController pantryController = new PantryController(database);
 
-    Javalin server = Javalin.create(config ->
-      config.registerPlugin(new RouteOverviewPlugin("/api"))
-    );
+    Javalin server = Javalin.create(config -> config.registerPlugin(new RouteOverviewPlugin("/api")));
     /*
      * We want to shut the `mongoClient` down if the server either
      * fails to start, or when it's shutting down for whatever reason.
@@ -69,7 +68,7 @@ public class Server {
     server.get("/api/products/{id}", productController::getProduct);
 
     server.post("/api/products", productController::addNewProduct);
-    
+
     server.get("/api/pantry", pantryController::getPantrys);
 
     server.get("/api/pantry/{id}", pantryController::getPantry);
