@@ -12,7 +12,6 @@ import { ShoppingListService } from './shoppingList.service';
 export class ShoppingListListComponent implements OnInit {
 
   public filteredShoppingList: ShoppingList[];
-  public serverFilteredShoppingList: ShoppingList[];
 
   // instead of typing shopping list i'm going to replace it with item
   public itemName: string;
@@ -33,11 +32,6 @@ export class ShoppingListListComponent implements OnInit {
     }, err => {
       console.log(err);
     });
-  }
-
-  public updateFilter(): void {
-    this.filteredShoppingList = this.shoppingListService.filterShoppingList(
-      this.serverFilteredShoppingList, {name: this.itemName});
   }
 
   ngOnInit(): void {
