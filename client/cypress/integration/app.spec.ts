@@ -9,7 +9,7 @@ describe('App', () => {
     page.getAppTitle().should('contain', 'Handy Pantry');
   });
 
-  it('The sidenav should open, navigate to "Pantry" and back to "Home"', () => {
+  it('The sidenav should have the ability to use sideNav in all pages and go to all pages through sideNav', () => {
     // Before clicking on the button, the sidenav should be hidden
     page.getSidenav()
       .should('be.hidden');
@@ -33,6 +33,12 @@ describe('App', () => {
     cy.url().should('match', /\/pantry$/);
     page.getSidenav()
       .should('be.hidden');
+
+      page.getSidenavButton().click();
+      page.getNavLink('Shopping List').click();
+      cy.url().should('match', /\/shoppingList$/);
+      page.getSidenav()
+        .should('be.hidden');
   });
 
 });
