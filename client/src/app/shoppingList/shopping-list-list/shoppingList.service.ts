@@ -14,7 +14,6 @@ export class ShoppingListService {
   constructor(private httpClient: HttpClient ) {
   }
 
-
   getShoppingListById(id: string): Observable<ShoppingList> {
     return this.httpClient.get<ShoppingList>(this.shoppingListUrl + '/' + id);
   }
@@ -24,7 +23,7 @@ export class ShoppingListService {
 
     if (filters) {
       if (filters.name) {
-        httpParams = httpParams.set('name', filters.name);
+        httpParams = httpParams.set('productName', filters.name);
       }
     }
 

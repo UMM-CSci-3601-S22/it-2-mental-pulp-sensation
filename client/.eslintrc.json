@@ -11,9 +11,8 @@
       "parserOptions": {
         "project": [
           "tsconfig.json",
-          "cypress/tsconfig.json",
+          "cypress/tsconfig.json"
         ],
-        "tsconfigRootDir": "__dirname",
         "createDefaultProgram": true
       },
       "extends": [

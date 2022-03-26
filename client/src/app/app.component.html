@@ -16,6 +16,11 @@
         <mat-icon matListIcon>shopping_basket</mat-icon>
         Products
       </a>
+
+      <a mat-list-item routerLink="/pantry" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
+        <mat-icon matListIcon>view_column</mat-icon> <!--table_chart-->
+        Pantry
+      </a>
       <a mat-list-item routerLink="/shoppingList" routerLinkActive="drawer-list-item-active" (click)="drawer.close()">
         <mat-icon matListIcon>grid_on</mat-icon>
         Shopping List

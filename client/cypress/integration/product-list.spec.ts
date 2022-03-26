@@ -1,4 +1,4 @@
-import {ProductListPage } from '../support/product-list.po';
+import { ProductListPage } from '../support/product-list.po';
 
 const page = new ProductListPage();
 
