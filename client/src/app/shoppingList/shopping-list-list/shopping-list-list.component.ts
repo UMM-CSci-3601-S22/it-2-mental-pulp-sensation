@@ -35,6 +35,11 @@ export class ShoppingListListComponent implements OnInit {
     });
   }
 
+  public updateFilter(): void {
+    this.filteredShoppingList = this.shoppingListService.filterShoppingList(
+      this.serverFilteredShoppingList, {name: this.itemName});
+  }
+
   ngOnInit(): void {
     this.getItemsFromServer();
   }
