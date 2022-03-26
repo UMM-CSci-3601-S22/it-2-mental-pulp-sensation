@@ -24,8 +24,8 @@ export class ShoppingListService {
     let httpParams: HttpParams = new HttpParams();
 
     if (filters) {
-      if (filters.productName) {
-        httpParams = httpParams.set('productName', filters.productName);
+      if (filters.name) {
+        httpParams = httpParams.set('productName', filters.name);
       }
     }
 

@@ -10,7 +10,7 @@
             <mat-form-field class="input-field">
               <mat-label>Name</mat-label>
               <input matInput data-test="shoppingListNameInput" placeholder="Filter by item name"
-              [(ngModel)]="itemName" (input) = "getItemsFromServer">
+              [(ngModel)]="itemName" (input)="getItemsFromServer()">
               <mat-hint>Search for an item by name</mat-hint>
             </mat-form-field>
 
@@ -24,7 +24,7 @@
     <h3 mat-subheader>Items</h3>
     <a mat-list-item *ngFor="let shoppingList of this.filteredShoppingList" class="product-list-item">
       <h3 matLine class="product-list-name">{{shoppingList.productName}}</h3>
-      <h4 matLine class="product-list-store">{{shoppingList.store}}</h4>
-      <p matLine class="product-list-description">{{shoppingList.quantity}}</p>
+      <h4 matLine class="product-list-store">Store: {{shoppingList.store}}</h4>
+      <p matLine class="product-list-description">Need to buy {{shoppingList.quantity}}</p>
     </a>
   </mat-list>
