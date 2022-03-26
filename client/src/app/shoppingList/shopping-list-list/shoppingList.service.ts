@@ -14,13 +14,11 @@ export class ShoppingListService {
   constructor(private httpClient: HttpClient ) {
   }
 
-  filterShoppingList()
-
   getShoppingListById(id: string): Observable<ShoppingList> {
     return this.httpClient.get<ShoppingList>(this.shoppingListUrl + '/' + id);
   }
 
-  getShoppingList(filters?: { productName?: string }): Observable<ShoppingList[]> {
+  getShoppingList(filters?: { name?: string }): Observable<ShoppingList[]> {
     let httpParams: HttpParams = new HttpParams();
 
     if (filters) {

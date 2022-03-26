@@ -1,9 +1,9 @@
-export class shoppingListListPage {
+export class ShoppingListListPage {
     navigateTo() {
         return cy.visit('/shoppingList');
       }
 
       getShoppingListItems() {
-          return cy.get('.shoppingList-nav-list .product-list-item');
+          return cy.get('.shoppingList-list .shoppingList-list-item');
       }
 }

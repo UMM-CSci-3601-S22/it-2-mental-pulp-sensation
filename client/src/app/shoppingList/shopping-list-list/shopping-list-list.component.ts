@@ -27,17 +27,12 @@ export class ShoppingListListComponent implements OnInit {
   getItemsFromServer(): void {
     this.unsub();
     this.getItemsSub = this.shoppingListService.getShoppingList({
-      productName: this.itemName
+      name: this.itemName
     }).subscribe(returnedShoppingList => {
       this.filteredShoppingList = returnedShoppingList;
-      this.updateFilter();
     }, err => {
       console.log(err);
     });
-  }
-  public updateFilter(): void {
-    this.filteredShoppingList = this.shoppingListService.filterShoppingList(
-      this.serverFilteredShoppingList, {name: this.itemName});
   }
 
   ngOnInit(): void {
