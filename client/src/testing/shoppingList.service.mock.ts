@@ -5,7 +5,7 @@ import { ShoppingListService } from '../app/shoppingList/shopping-list-list/shop
 
 @Injectable()
 export class MockShoppingListService extends ShoppingListService {
-  static testShoppingLists: ShoppingList[] = [
+  static testShoppingList: ShoppingList[] = [
     {
       _id: 'apple_id',
       productName:'Apple',
@@ -33,16 +33,18 @@ export class MockShoppingListService extends ShoppingListService {
     super(null);
   }
 
-  getShoppingLists(filters: { name: string }): Observable<ShoppingList[]> {
-    return of(MockShoppingListService.testShoppingLists);
+  getShoppingList(filters: {
+    name?: string;
+  }): Observable<ShoppingList[]> {
+    return of(MockShoppingListService.testShoppingList);
   }
 
   getShoppingListById(id: string): Observable<ShoppingList> {
     // If the specified ID is for the first test shoppingList,
     // return that shoppingList, otherwise return `null` so
     // we can test illegal shoppingList requests.
-    if (id === MockShoppingListService.testShoppingLists[0]._id) {
-      return of(MockShoppingListService.testShoppingLists[0]);
+    if (id === MockShoppingListService.testShoppingList[0]._id) {
+      return of(MockShoppingListService.testShoppingList[0]);
     } else {
       return of(null);
     }
