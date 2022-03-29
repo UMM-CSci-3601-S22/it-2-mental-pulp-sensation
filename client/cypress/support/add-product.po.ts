@@ -1,4 +1,5 @@
-import {Product} from 'src/app/products/product';
+import { contains } from 'cypress/types/jquery';
+import { Product } from 'src/app/products/product';
 
 export class AddProductPage {
   navigateTo() {
@@ -24,7 +25,7 @@ export class AddProductPage {
   addProduct(newProduct: Product) {
     this.getFormField('name').type(newProduct.name);
     this.getFormField('brand').type(newProduct.brand);
-    this.getFormField('store').type(newProduct.store);
+    this.getFormField('store').click().get('[data-test=clickWillies]').click();
     if (newProduct.description) {
       this.getFormField('description').type(newProduct.description);
     }
