@@ -32,6 +32,8 @@ import { ProductListComponent } from './products/product-list.component';
 import { ProductCardComponent } from './products/product-card.component';
 import { ProductService } from './products/product.service';
 import { AddProductComponent } from './products/add-product.component';
+import { ShoppingListListComponent } from './shoppingList/shopping-list-list/shopping-list-list.component';
+import { ShoppingListService } from './shoppingList/shopping-list-list/shoppingList.service';
 import { PantryCardComponent } from './pantry/pantry-card/pantry-card.component';
 import { PantryListComponent } from './pantry/pantry-list/pantry-list.component';
 import { PantryProfileComponent } from './pantry/pantry-profile/pantry-profile.component';
@@ -65,6 +67,7 @@ const MATERIAL_MODULES: any[] = [
     ProductListComponent,
     ProductCardComponent,
     AddProductComponent,
+    ShoppingListListComponent,
     PantryCardComponent,
     PantryListComponent,
     PantryProfileComponent,
@@ -83,6 +86,7 @@ const MATERIAL_MODULES: any[] = [
   providers: [
 
     ProductService,
+    ShoppingListService,
     PantryService,
   ],
   bootstrap: [AppComponent]

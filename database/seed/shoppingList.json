@@ -3,6 +3,7 @@
     "_id": {
       "$oid": "62267f81fc13ae223000127a"
     },
+    "prodID":"5555550",
     "productName": "Tomatoes",
     "store": "coop",
     "quantity": 4
@@ -11,6 +12,7 @@
     "_id": {
       "$oid": "62267f81fc13ae223000127b"
     },
+    "prodID":"5555559",
     "productName": "Bread",
     "store": "willies",
     "quantity": 12
@@ -19,6 +21,7 @@
     "_id": {
       "$oid": "62267f81fc13ae223000127c"
     },
+    "prodID":"5555558",
     "productName": "Water",
     "store": "willies",
     "quantity": 34
@@ -27,6 +30,7 @@
     "_id": {
       "$oid": "62267f81fc13ae223000127d"
     },
+    "prodID":"5555557",
     "productName": "Ketchup",
     "store": "willies",
     "quantity": 25
@@ -35,6 +39,7 @@
     "_id": {
       "$oid": "62267f81fc13ae223000127e"
     },
+    "prodID":"5555556",
     "productName": "Peanut Butter",
     "store": "coop",
     "quantity": 10
@@ -43,6 +48,7 @@
     "_id": {
       "$oid": "62267f81fc13ae223000127f"
     },
+    "prodID":"5555555",
     "productName": "Count Chocula Cereal",
     "store": "willies",
     "quantity": 17
@@ -51,6 +57,7 @@
     "_id": {
       "$oid": "62267f81fc13ae2230001280"
     },
+    "prodID":"5555554",
     "productName": "Honey",
     "store": "coop",
     "quantity": 50
@@ -59,6 +66,7 @@
     "_id": {
       "$oid": "62267f81fc13ae2230001281"
     },
+    "prodID":"5555553",
     "productName": "Ham",
     "store": "willies",
     "quantity": 93
@@ -67,6 +75,7 @@
     "_id": {
       "$oid": "62267f81fc13ae2230001282"
     },
+    "prodID":"5555552",
     "productName": "Curry",
     "store": "willies",
     "quantity": 44
@@ -75,6 +84,7 @@
     "_id": {
       "$oid": "62267f81fc13ae2230001283"
     },
+    "prodID":"5555551",
     "productName": "Peas",
     "store": "willies",
     "quantity": 51
