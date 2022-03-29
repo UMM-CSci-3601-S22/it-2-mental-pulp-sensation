@@ -38,15 +38,4 @@ export class MockShoppingListService extends ShoppingListService {
   }): Observable<ShoppingList[]> {
     return of(MockShoppingListService.testShoppingList);
   }
-
-  getShoppingListById(id: string): Observable<ShoppingList> {
-    // If the specified ID is for the first test shoppingList,
-    // return that shoppingList, otherwise return `null` so
-    // we can test illegal shoppingList requests.
-    if (id === MockShoppingListService.testShoppingList[0]._id) {
-      return of(MockShoppingListService.testShoppingList[0]);
-    } else {
-      return of(null);
-    }
-  }
 }
