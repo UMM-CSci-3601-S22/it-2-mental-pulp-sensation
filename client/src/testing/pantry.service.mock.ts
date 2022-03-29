@@ -43,15 +43,4 @@ export class MockPantryService extends PantryService {
     return of(MockPantryService.testPantry);
   }
 
-  getPantryById(id: string): Observable<Pantry> {
-    // If the specified ID is for the first test pantry,
-    // return that pantry, otherwise return `null` so
-    // we can test illegal pantry requests.
-    if (id === MockPantryService.testPantry[0]._id) {
-      return of(MockPantryService.testPantry[0]);
-    } else {
-      return of(null);
-    }
-  }
-
 }

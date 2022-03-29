@@ -54,5 +54,36 @@ describe('Shopping List service',() =>{
     expect(req.request.method).toEqual('GET');
     req.flush(testShoppingList);
   });
+  it('getShoppingList() calls api/shoppingList with filter', () => {
+    shoppingListService.getShoppingList({ name: 'Apple' }).subscribe(
+      shoppingLists => expect(shoppingLists).toBe(testShoppingList)
+    );
+
+    const req = httpTestingController.expectOne(
+      (request) => request.url.startsWith(shoppingListService.shoppingListUrl) && request.params.has('productName'));
+
+    expect(req.request.method).toEqual('GET');
+    expect(req.request.params.get('productName')).toEqual('Apple');
+    req.flush(testShoppingList);
+  });
+  it('getShoppingListById() calls api/shoppingList/id', () => {
+    const targetShoppingList: ShoppingList = testShoppingList[1];
+    const targetId: string = targetShoppingList._id;
+    shoppingListService.getShoppingListById(targetId).subscribe(
+      shoppingList => expect(shoppingList).toBe(targetShoppingList)
+    );
+    const expectedUrl: string = shoppingListService.shoppingListUrl + '/'+ targetId;
+    const req = httpTestingController.expectOne(expectedUrl);
+    expect(req.request.method).toEqual('GET');
+    req.flush(targetShoppingList);
+  });
+  it('addShoppingList() calls api/shoppingList/id', () => {
+    shoppingListService.addShoppingList(testShoppingList[1]).subscribe(
+      id => expect(id).toBe('testid')
+    );
+    const req = httpTestingController.expectOne(shoppingListService.shoppingListUrl);
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body).toEqual(testShoppingList[1]);
+  });
 });
 

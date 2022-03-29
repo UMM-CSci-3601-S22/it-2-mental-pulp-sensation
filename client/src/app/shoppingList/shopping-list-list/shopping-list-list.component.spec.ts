@@ -74,4 +74,48 @@ describe('ShoppingListListComponent', () => {
   it('contains a product with name \'Orange\'', () => {
     expect(shoppingListList.filteredShoppingList.some((item: ShoppingList) => item.productName === 'Orange')).toBe(true);
   });
+  it('should be able to unsub', () => {
+    expect(shoppingListList.getItemsSub).toBeTruthy();
+    shoppingListList.unsub();
+    expect(!shoppingListList.getItemsSub.closed).toBeFalsy();
+  });
+});
+
+describe('Misbehaving ShoppingList List', () => {
+  let shoppingListList: ShoppingListListComponent;
+  let fixture: ComponentFixture<ShoppingListListComponent>;
+
+  let shoppingListServiceStub: {
+    getShoppingList: () => Observable<ShoppingList[]>;
+  };
+
+  beforeEach(() => {
+    // stub ShoppingListService for test purposes
+    shoppingListServiceStub = {
+      getShoppingList: () => new Observable(observer => {
+        observer.error('Error-prone observable');
+      })
+    };
+
+    TestBed.configureTestingModule({
+      imports: [COMMON_IMPORTS],
+      declarations: [ShoppingListListComponent],
+      // providers:    [ ShoppingListService ]  // NO! Don't provide the real service!
+      // Provide a test-double instead
+      providers: [{ provide: ShoppingListService, useValue: shoppingListServiceStub }]
+    });
+  });
+
+  beforeEach(waitForAsync(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(ShoppingListListComponent);
+      shoppingListList = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  }));
+
+  it('generates an error if we don\'t set up a ShoppingListListService', () => {
+    // Since the observer throws an error, we don't expect shoppingLists to be defined.
+    expect(shoppingListList.filteredShoppingList).toBeUndefined();
+  });
 });
