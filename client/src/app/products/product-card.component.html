@@ -16,5 +16,12 @@
       <h4>Notes</h4>
       <p class="product-card-notes">{{this.product.notes}}</p>
     </div>
+
+  <div>
+    <button fxFlexOffset.gt-sm="1" mat-fab class="add-pantry-fab" matTooltip="Add a product to pantry" matTooltipPosition="right" data-test="AddPantryButton" (click)="this.pantryService.addPantry(this.product)">
+      <mat-icon class="md-24" aria-label="Add Product To Pantry">add</mat-icon>
+    </button>
+  </div>
+
   </mat-card-content>
 </mat-card>

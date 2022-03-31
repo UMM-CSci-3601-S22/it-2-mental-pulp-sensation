@@ -74,6 +74,7 @@ public class Server {
     server.get("/api/shoppingList", shoppingListController::getShoppingLists);
 
     server.post("/api/shoppingList", shoppingListController::addNewShoppingList);
+    
     server.get("/api/pantry", pantryController::getPantrys);
 
     server.get("/api/pantry/{id}", pantryController::getPantry);

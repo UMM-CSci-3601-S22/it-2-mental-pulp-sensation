@@ -31,7 +31,6 @@ import io.javalin.http.NotFoundResponse;
 public class PantryController {
 
   private static final String DATE_KEY = "date";
-  private static final String NOTES_KEY = "notes";
   private static final String NAME_KEY = "name";
   private static final String PROD_KEY = "prodID";
 
@@ -140,7 +139,7 @@ public class PantryController {
         .check(usr -> usr.name != null && usr.name.length() > 0,
             "Pantry must have a non-empty pantry name")
         .check(usr -> usr.prodID != null && usr.prodID.length() > 0,
-            "Pantry must have a non-empty pantry name")
+            "Pantry must have a non-empty pantry prodID")
         .get();
 
     pantryCollection.insertOne(newPantry);

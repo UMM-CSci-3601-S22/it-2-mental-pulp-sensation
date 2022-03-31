@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Pantry } from './pantry';
 import { map } from 'rxjs/operators';
+import { Product } from '../products/product';
 
 @Injectable()
 export class PantryService {
@@ -40,7 +41,8 @@ export class PantryService {
   filterPantrys(pantrys: Pantry[], filters: {
     name?: string;
     date?: string;
-    prodID?: string;}): Pantry[] {
+    prodID?: string;
+  }): Pantry[] {
 
     let filteredPantrys = pantrys;
 
@@ -65,8 +67,16 @@ export class PantryService {
     return filteredPantrys;
   }
 
-  addPantry(newPantry: Pantry): Observable<string> {
+  addPantry(newProduct: Product): Observable<string> {
+    const newPantry: Pantry =
+    {
+      _id: 'grhg59dyg3',
+      prodID: newProduct._id,
+      name: newProduct.name,
+      date: '12/5/2020'
+    };
+
     // Send post request to add a new pantry with the pantry data as the body.
-    return this.httpClient.post<{id: string}>(this.pantryUrl, newPantry).pipe(map(res => res.id));
+    return this.httpClient.post<{ id: string }>(this.pantryUrl, newProduct).pipe(map(res => res.id));
   }
 }

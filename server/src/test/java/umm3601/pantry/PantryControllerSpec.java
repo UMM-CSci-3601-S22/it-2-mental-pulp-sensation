@@ -124,27 +124,23 @@ public class PantryControllerSpec {
         new Document()
             .append("prodID", "588935f5")
             .append("name", "apple")
-            .append("date", "1/20/2022")
-            .append("notes", "yummy"));
+            .append("date", "1/20/2022"));
     testPantry.add(
         new Document()
         .append("prodID", "6f992bf")
         .append("name", "Banana")
-        .append("date", "2/20/2022")
-        .append("notes", "good source of potassium"));
+        .append("date", "2/20/2022"));
     testPantry.add(
         new Document()
         .append("prodID", "8f37c")
           .append("name", "PORK LOIN")
-          .append("date", "1/30/2022")
-          .append("notes", "goods oup"));
+          .append("date", "1/30/2022"));
     samsId = new ObjectId();
     Document sam = new Document()
         .append("_id", samsId)
         .append("prodID", "f992bf8f37c01")
         .append("name", "corn FLAKEs")
-        .append("date", "5/20/2020")
-        .append("notes", "lmao");
+        .append("date", "5/20/2020");
     pantryDocuments.insertMany(testPantry);
     pantryDocuments.insertOne(sam);
 
@@ -266,7 +262,7 @@ public class PantryControllerSpec {
     assertEquals(1, resultPantry.length);
     for (Pantry pantry : resultPantry) {
       assertEquals("corn FLAKEs", pantry.name);
-      assertEquals("lmao", pantry.notes);
+
     }
   }
 
@@ -307,7 +303,6 @@ public class PantryControllerSpec {
     String testNewPantry = "{"
         + "\"name\": \"chips\","
         + "\"prodID\": \"8733g5\","
-        + "\"notes\": \"hey\","
         + "\"date\": \"1/1/2011\""
         + "}";
     mockReq.setBodyContent(testNewPantry);
@@ -334,7 +329,6 @@ public class PantryControllerSpec {
     assertNotNull(addedPantry);
     assertEquals("chips", addedPantry.getString("name"));
     assertEquals("8733g5", addedPantry.getString("prodID"));
-    assertEquals("hey", addedPantry.getString("notes"));
     assertEquals("1/1/2011", addedPantry.getString("date"));
 
 
@@ -345,7 +339,6 @@ public class PantryControllerSpec {
     String testNewPantry = "{"
     + "\"name\": \"chips\","
     + "\"prodID\": \"\","
-    + "\"notes\": \"hey\","
     + "\"date\": \"1/1/2011\""
     + "}";
     mockReq.setBodyContent(testNewPantry);
@@ -363,7 +356,6 @@ public class PantryControllerSpec {
   public void addNullNamePantry() throws IOException {
     String testNewPantry = "{"
     + "\"prodID\": \"8733g5\","
-    + "\"notes\": \"hey\","
     + "\"date\": \"1/1/2011\""
     + "}";
     mockReq.setBodyContent(testNewPantry);
@@ -381,7 +373,6 @@ public class PantryControllerSpec {
     String testNewPantry = "{"
     + "\"name\": \"\","
     + "\"prodID\": \"8733g5\","
-    + "\"notes\": \"hey\","
     + "\"date\": \"1/1/2011\""
     + "}";
     mockReq.setBodyContent(testNewPantry);
@@ -400,7 +391,6 @@ public class PantryControllerSpec {
   public void addNullProdIDPantry() throws IOException {
     String testNewPantry = "{"
     + "\"name\": \"chips\","
-    + "\"notes\": \"hey\","
     + "\"date\": \"1/1/2011\""
     + "}";
     mockReq.setBodyContent(testNewPantry);

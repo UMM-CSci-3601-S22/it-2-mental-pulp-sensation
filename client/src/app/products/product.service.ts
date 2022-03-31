@@ -5,13 +5,14 @@ import { environment } from '../../environments/environment';
 import { Product } from './product';
 import { map } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
   readonly productUrl: string = environment.apiUrl + 'products';
 
-  constructor(private httpClient: HttpClient ) {
+  constructor(private httpClient: HttpClient) {
   }
 
   filterProducts(products: Product[], filters: { name?: string }): Product[] {
@@ -47,6 +48,7 @@ export class ProductService {
   }
 
   addProduct(newProduct: Product): Observable<string> {
-    return this.httpClient.post<{id: string}>(this.productUrl, newProduct).pipe(map(res => res.id));
+    return this.httpClient.post<{ id: string }>(this.productUrl, newProduct).pipe(map(res => res.id));
   }
 }
+

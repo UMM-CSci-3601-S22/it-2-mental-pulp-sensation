@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PantryService } from '../pantry/pantry.service';
 import { Product } from './product';
 
 @Component({
@@ -11,7 +12,7 @@ export class ProductCardComponent implements OnInit {
   @Input() product: Product;
   @Input() simple ? = false;
 
-  constructor() { }
+  constructor(public pantryService: PantryService) { }
 
   ngOnInit(): void {
   }
