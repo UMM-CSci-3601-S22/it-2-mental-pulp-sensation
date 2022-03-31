@@ -41,6 +41,7 @@ public class ProductController {
 
   public void getProduct(Context ctx) {
     String id = ctx.pathParam("id");
+    System.out.println(id);
     Product product;
 
     try {
@@ -85,8 +86,6 @@ public class ProductController {
   }
 
   public void addNewProduct(Context ctx) {
-    Bson filter = Filters.eq("name", "Beef Ground Medium");
-    Bson update = Updates.set("brand", "please work eufawejifa");
     /*
      * The follow chain of statements uses the Javalin validator system
      * to verify that instance of `Product` provided in this context is
@@ -105,14 +104,24 @@ public class ProductController {
       .get();
 
     productCollection.insertOne(newProduct);
-    System.err.println("do we get here?");
-    productCollection.findOneAndUpdate(filter, update);
-    System.err.println("How about after?");
     // 201 is the HTTP code for when we successfully
     // create a new resource (a product in this case).
     // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);
     ctx.json(Map.of("id", newProduct._id));
+  }
+
+  public void changeProduct(Context ctx){
+    String _id = ctx.pathParam("id");
+    System.out.println(_id);
+
+    Product newProduct = ctx.bodyValidator(Product.class)
+      .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
+      .get();
+
+    Bson filter = Filters.eq("_id", _id);
+    Bson update = Updates.set("threshold", newProduct.threshold);
+    productCollection.findOneAndUpdate(filter, update);
   }
 }
