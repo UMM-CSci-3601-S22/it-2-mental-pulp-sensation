@@ -12,7 +12,7 @@ export class ProductCardComponent implements OnInit {
   @Input() product: Product;
   @Input() simple ? = false;
 
-  constructor(public pantryService: PantryService) { }
+  constructor(private pantryService: PantryService) { }
 
   ngOnInit(): void {
   }

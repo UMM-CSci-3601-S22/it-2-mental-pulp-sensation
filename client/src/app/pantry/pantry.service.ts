@@ -70,13 +70,14 @@ export class PantryService {
   addPantry(newProduct: Product): Observable<string> {
     const newPantry: Pantry =
     {
-      _id: 'grhg59dyg3',
+      _id: null,
       prodID: newProduct._id,
       name: newProduct.name,
       date: '12/5/2020'
     };
+    console.log('calling add pantry');
 
     // Send post request to add a new pantry with the pantry data as the body.
-    return this.httpClient.post<{ id: string }>(this.pantryUrl, newProduct).pipe(map(res => res.id));
+    return this.httpClient.post<{ id: string }>(this.pantryUrl, newPantry).pipe(map(res => res.id));
   }
 }
