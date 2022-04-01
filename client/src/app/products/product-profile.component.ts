@@ -71,15 +71,22 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
   submitForm() {
     this.changeProductForm.value._id = this.id;
     this.productService.changeProduct(this.changeProductForm.value).subscribe(newID => {
-      this.snackBar.open('Added Product ' + this.changeProductForm.value.name, null, {
+      this.snackBar.open('Changed Threshold to ' + this.changeProductForm.value.threshold, null, {
         duration: 2000,
       });
-      this.router.navigate(['/products', this.id]);
+      this.reloadComponent();
     }, err => {
       this.snackBar.open('Failed to add the product', 'OK', {
         duration: 5000,
       });
     });
+  }
+
+  reloadComponent(){
+    const currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
 }

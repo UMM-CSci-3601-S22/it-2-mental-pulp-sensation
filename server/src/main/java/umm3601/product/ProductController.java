@@ -41,7 +41,6 @@ public class ProductController {
 
   public void getProduct(Context ctx) {
     String id = ctx.pathParam("id");
-    System.out.println(id);
     Product product;
 
     try {
@@ -114,8 +113,6 @@ public class ProductController {
 
   public void changeProduct(Context ctx){
     String _id = ctx.pathParam("id");
-    System.out.println(_id);
-
     Product newProduct = ctx.bodyValidator(Product.class)
       .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
       .get();
@@ -123,5 +120,12 @@ public class ProductController {
     Bson filter = Filters.eq("_id", _id);
     Bson update = Updates.set("threshold", newProduct.threshold);
     productCollection.findOneAndUpdate(filter, update);
+    try {
+      newProduct = productCollection.find(eq("_id", new ObjectId(_id))).first();
+    } catch (IllegalArgumentException e) {
+      throw new BadRequestResponse("The requested product id wasn't a legal Mongo Object ID.");}
+    ctx.status(HttpCode.CREATED);
+    ctx.json(Map.of("id", newProduct._id));
   }
 }
+
