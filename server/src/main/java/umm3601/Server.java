@@ -51,7 +51,6 @@ public class Server {
 
     Javalin server = Javalin.create(config -> {
       config.registerPlugin(new RouteOverviewPlugin("/api"));
-      config.enableDevLogging();
     });
     /*
      * We want to shut the `mongoClient` down if the server either

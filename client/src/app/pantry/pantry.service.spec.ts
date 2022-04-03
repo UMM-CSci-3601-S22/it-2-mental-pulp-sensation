@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { Product } from '../products/product';
 import { Pantry } from './pantry';
 import { PantryService } from './pantry.service';
 
@@ -24,8 +25,19 @@ describe('Pantry service: ', () => {
       prodID: 'brim',
       date: 'May 15, 2022',
       name: 'pog'
-    }
+    },
+    {
+       _id: null,
+        prodID: 'thsdghsdf',
+       name: 'butter',
+       date: '12/5/2020'
+    },
   ];
+  const testProducts: Product =
+  {
+    _id: 'thsdghsdf',
+    name: 'butter'
+  };
   let pantryService: PantryService;
   // These are used to mock the HTTP requests so that we (a) don't have to
   // have the server running and (b) we can check exactly which HTTP
@@ -112,42 +124,41 @@ describe('Pantry service: ', () => {
   });
 
   it('filterPantrys() filters by prodID', () => {
-    expect(testPantrys.length).toBe(3);
+    expect(testPantrys.length).toBe(4);
     const pantryProdID = 'b';
     expect(pantryService.filterPantrys(testPantrys, { prodID: pantryProdID }).length).toBe(2);
   });
 
   it('filterPantrys() filters by date', () => {
-    expect(testPantrys.length).toBe(3);
+    expect(testPantrys.length).toBe(4);
     const pantryDate = 'May 15, 2022';
     expect(pantryService.filterPantrys(testPantrys, { date: pantryDate }).length).toBe(3);
   });
 
   it('filterPantrys() filters by name', () => {
-    expect(testPantrys.length).toBe(3);
+    expect(testPantrys.length).toBe(4);
     const pantryName = 'pog';
     expect(pantryService.filterPantrys(testPantrys, { name: pantryName }).length).toBe(1);
   });
 
   it('filterPantrys() filters by prodID, date, and name', () => {
-    expect(testPantrys.length).toBe(3);
+    expect(testPantrys.length).toBe(4);
     const pantryProdID = 'b';
     const pantryDate = 'May 15, 2022';
     const pantryName = 'Chris';
     expect(pantryService.filterPantrys(testPantrys, { prodID: pantryProdID, date: pantryDate, name: pantryName }).length).toBe(1);
   });
+  it('addProduct posts to api/products', () => {
 
-  it('addPantry() posts to api/pantry', () => {
-
-    pantryService.addPantry(testPantrys[1]).subscribe(
+    pantryService.addPantry(testProducts).subscribe(
       id => expect(id).toBe('testid')
     );
-
     const req = httpTestingController.expectOne(pantryService.pantryUrl);
 
     expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(testPantrys[1]);
+    expect(req.request.body).toEqual(testPantrys[3]);
 
     req.flush({ id: 'testid' });
   });
+
 });

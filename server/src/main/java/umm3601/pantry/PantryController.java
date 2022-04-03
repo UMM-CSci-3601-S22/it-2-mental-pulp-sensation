@@ -30,7 +30,7 @@ import io.javalin.http.NotFoundResponse;
  */
 public class PantryController {
 
-  private static final String DATE_KEY = "date";
+  // private static final String DATE_KEY = "date";
   private static final String NAME_KEY = "name";
   private static final String PROD_KEY = "prodID";
 
@@ -124,8 +124,6 @@ public class PantryController {
    * @param ctx a Javalin HTTP context
    */
   public void addNewPantry(Context ctx) {
-    System.out.println("Calling function");
-
     Pantry newPantry = ctx.bodyAsClass(Pantry.class);
 
     pantryCollection.insertOne(newPantry);
