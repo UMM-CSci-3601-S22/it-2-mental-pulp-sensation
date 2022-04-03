@@ -297,7 +297,8 @@ public class ShoppingListControllerSpec {
         String testNewShoppingList = "{"
                 + "\"productName\": \"chips\","
                 + "\"store\": \"coop\","
-                + "\"quantity\": 69"
+                + "\"quantity\": 69,"
+                + "\"prodID\": 45432323"
                 + "}";
         mockReq.setBodyContent(testNewShoppingList);
         mockReq.setMethod("POST");
@@ -325,6 +326,7 @@ public class ShoppingListControllerSpec {
         assertEquals("chips", addedShoppingList.getString("productName"));
         assertEquals("coop", addedShoppingList.getString("store"));
         assertEquals(69, addedShoppingList.getInteger("quantity"));
+        assertEquals("45432323", addedShoppingList.getString("prodID"));
 
     }
 
@@ -333,7 +335,8 @@ public class ShoppingListControllerSpec {
         String testNewShoppingList = "{"
                 + "\"productName\": \"chips\","
                 + "\"store\": \"\","
-                + "\"quantity\": 69"
+                + "\"quantity\": 69,"
+                + "\"prodID\": 45432323"
                 + "}";
         mockReq.setBodyContent(testNewShoppingList);
         mockReq.setMethod("POST");
@@ -349,7 +352,8 @@ public class ShoppingListControllerSpec {
     public void addNullProductNameShoppingList() throws IOException {
         String testNewShoppingList = "{"
                 + "\"store\": \"coop\","
-                + "\"quantity\": 69"
+                + "\"quantity\": 69,"
+                + "\"prodID\": 45432323"
                 + "}";
         mockReq.setBodyContent(testNewShoppingList);
         mockReq.setMethod("POST");
@@ -366,7 +370,8 @@ public class ShoppingListControllerSpec {
         String testNewShoppingList = "{"
                 + "\"productName\": \"\","
                 + "\"store\": \"coop\","
-                + "\"quantity\": 69"
+                + "\"quantity\": 69,"
+                + "\"prodID\": 45432323"
                 + "}";
         mockReq.setBodyContent(testNewShoppingList);
         mockReq.setMethod("POST");
@@ -382,7 +387,8 @@ public class ShoppingListControllerSpec {
     public void addNullStoreShoppingList() throws IOException {
         String testNewShoppingList = "{"
                 + "\"productName\": \"chips\","
-                + "\"quantity\": 69"
+                + "\"quantity\": 69,"
+                + "\"prodID\": 45432323"
                 + "}";
         mockReq.setBodyContent(testNewShoppingList);
         mockReq.setMethod("POST");
@@ -399,7 +405,8 @@ public class ShoppingListControllerSpec {
         String testNewShoppingList = "{"
                 + "\"productName\": \"chips\","
                 + "\"store\": \"target\","
-                + "\"quantity\": 69"
+                + "\"quantity\": 69,"
+                + "\"prodID\": 45432323"
                 + "}";
         mockReq.setBodyContent(testNewShoppingList);
         mockReq.setMethod("POST");
@@ -416,7 +423,8 @@ public class ShoppingListControllerSpec {
         String testNewProduct = "{"
                 + "\"productName\": \"chips\","
                 + "\"store\": \"coop\","
-                + "\"quantity\": -96"
+                + "\"quantity\": -96,"
+                + "\"prodID\": 45432323"
                 + "}";
         mockReq.setBodyContent(testNewProduct);
         mockReq.setMethod("POST");

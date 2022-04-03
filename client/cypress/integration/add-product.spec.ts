@@ -19,7 +19,7 @@ describe('Add product', () => {
     page.addProductButton().should('be.disabled');
     page.getFormField('name').type('test');
     page.addProductButton().should('be.disabled');
-    page.getFormField('store').type('A store');
+    page.getFormField('store').click().get('[data-test=clickWillies]').click();
     page.addProductButton().should('be.disabled');
     page.getFormField('brand').type('potatoBrand');
     page.addProductButton().should('be.enabled');
@@ -30,7 +30,7 @@ describe('Add product', () => {
     // all the required fields have valid input, then it should be enabled
   });
 
-  it('Should show error messages for invalid inputs', () => {
+  it('Should show error messages for invalid inputs name error', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=nameError]').should('not.exist');
     // Just clicking the name field without entering anything should cause an error message
@@ -46,23 +46,24 @@ describe('Add product', () => {
     cy.get('[data-test=nameError]').should('not.exist');
   });
 
-  it('Should show error messages for invalid inputs', () => {
+  it('Should show error messages for invalid inputs store error', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=storeError]').should('not.exist');
     // Just clicking the description field without entering anything should cause an error message
-    page.getFormField('store').click().blur();
+    page.getFormField('store').click();
+    cy.get('.cdk-overlay-backdrop').click();
     cy.get('[data-test=storeError]').should('exist').and('be.visible');
     // Some more tests for various invalid description inputs
-    page.getFormField('store').type('J').blur();
+    page.getFormField('store').click().get('[data-test=clickCoop]').click();
     cy.get('[data-test=storeError]').should('not.exist');
-    page.getFormField('store').clear().type('This is a very long store that goes beyond the 50 character limit').blur();
-    cy.get('[data-test=storeError]').should('exist').and('be.visible');
+    page.getFormField('store').click().get('[data-test=clickOther]').click();
+    cy.get('[data-test=storeError]').should('not.exist');
     // Entering a valid store should remove the error.
-    page.getFormField('store').clear().type('John Smith').blur();
+    page.getFormField('store').click().get('[data-test=clickWillies]').click();
     cy.get('[data-test=storeError]').should('not.exist');
   });
 
-  it('Should show error messages for invalid inputs', () => {
+  it('Should show error messages for invalid inputs brand error', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=brandError]').should('not.exist');
     // Just clicking the brand field without entering anything should cause an error message
@@ -90,7 +91,7 @@ describe('Add product', () => {
         _id: null,
         name: 'Test Product',
         brand: 'umm',
-        store: 'location',
+        store: 'Willies',
         lifespan: 20,
         threshold: 20
       };
