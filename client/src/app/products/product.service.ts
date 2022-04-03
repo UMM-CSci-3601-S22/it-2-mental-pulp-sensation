@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Product } from './product';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ProductService {
   readonly productUrl: string = environment.apiUrl + 'products';
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
+  constructor(private httpClient: HttpClient) {
   }
 
   filterProducts(products: Product[], filters: { name?: string }): Product[] {
@@ -52,6 +52,6 @@ export class ProductService {
   }
 
   changeProduct(product: Product): Observable<string> {
-    return this.httpClient.put<{ id: string }>(this.productUrl + '/change/' + product._id, product).pipe(map(res => res.id));
+    return this.httpClient.put<{ id: string }>(this.productUrl, product).pipe(map(res => res.id));
   }
 }
