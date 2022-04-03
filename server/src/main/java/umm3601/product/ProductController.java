@@ -27,7 +27,7 @@ import io.javalin.http.HttpCode;
 public class ProductController {
 
   private static final String NAME_KEY = "name";
-  //private static final String BRAND_KEY = "brand"; --One Day
+  // private static final String BRAND_KEY = "brand"; --One Day
 
   private final JacksonMongoCollection<Product> productCollection;
 
@@ -63,8 +63,8 @@ public class ProductController {
     // properties, return those sorted in the specified manner, and put the
     // results into an initially empty ArrayList.
     ArrayList<Product> matchingProducts = productCollection
-      .find(combinedFilter)
-      .into(new ArrayList<>());
+        .find(combinedFilter)
+        .into(new ArrayList<>());
 
     // Set the JSON body of the response to be the list of products returned by
     // the database.
@@ -75,7 +75,7 @@ public class ProductController {
     List<Bson> filters = new ArrayList<>(); // start with a blank document
 
     if (ctx.queryParamMap().containsKey(NAME_KEY)) {
-        filters.add(eq(NAME_KEY, ctx.queryParam(NAME_KEY)));
+      filters.add(eq(NAME_KEY, ctx.queryParam(NAME_KEY)));
     }
 
     // Combine the list of filters into a single filtering document.
@@ -89,18 +89,18 @@ public class ProductController {
      * The follow chain of statements uses the Javalin validator system
      * to verify that instance of `Product` provided in this context is
      * a "legal" product. It checks the following things (in order):
-     *    - The product has a value for the name (`pdr.name != null`)
-     *    - The product name is not blank (`pdr.name.length > 0`)
-     *    - The store is assumed to not be blank ('pdr.store.length > 0')
-     *    - The brand is assumed to not be blank ('pdr.brand.length > 0')
+     * - The product has a value for the name (`pdr.name != null`)
+     * - The product name is not blank (`pdr.name.length > 0`)
+     * - The store is assumed to not be blank ('pdr.store.length > 0')
+     * - The brand is assumed to not be blank ('pdr.brand.length > 0')
      */
     Product newProduct = ctx.bodyValidator(Product.class)
-      .check(pdr -> pdr.name != null && pdr.name.length() > 0, "Product must have a non-empty product name")
-      .check(pdr -> pdr.store != null && pdr.store.length() > 0, "Store must have a non-empty store name")
-      .check(pdr -> pdr.brand != null && pdr.brand.length() > 0, "Product must have a non-empty brand name")
-      .check(pdr -> pdr.lifespan >= 0, "Product's lifespan can't be negative")
-      .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
-      .get();
+        .check(pdr -> pdr.name != null && pdr.name.length() > 0, "Product must have a non-empty product name")
+        .check(pdr -> pdr.store != null && pdr.store.length() > 0, "Store must have a non-empty store name")
+        .check(pdr -> pdr.brand != null && pdr.brand.length() > 0, "Product must have a non-empty brand name")
+        .check(pdr -> pdr.lifespan >= 0, "Product's lifespan can't be negative")
+        .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
+        .get();
 
     productCollection.insertOne(newProduct);
     // 201 is the HTTP code for when we successfully
@@ -111,21 +111,21 @@ public class ProductController {
     ctx.json(Map.of("id", newProduct._id));
   }
 
-  public void changeProduct(Context ctx){
-    String _id = ctx.pathParam("id");
+  public void changeProduct(Context ctx) {
+    String id = ctx.pathParam("id");
     Product newProduct = ctx.bodyValidator(Product.class)
-      .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
-      .get();
+        .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
+        .get();
 
-    Bson filter = Filters.eq("_id", _id);
+    Bson filter = Filters.eq("_id", id);
     Bson update = Updates.set("threshold", newProduct.threshold);
     productCollection.findOneAndUpdate(filter, update);
     try {
-      newProduct = productCollection.find(eq("_id", new ObjectId(_id))).first();
+      newProduct = productCollection.find(eq("_id", new ObjectId(id))).first();
     } catch (IllegalArgumentException e) {
-      throw new BadRequestResponse("The requested product id wasn't a legal Mongo Object ID.");}
+      throw new BadRequestResponse("The requested product id wasn't a legal Mongo Object ID.");
+    }
     ctx.status(HttpCode.CREATED);
     ctx.json(Map.of("id", newProduct._id));
   }
 }
-
