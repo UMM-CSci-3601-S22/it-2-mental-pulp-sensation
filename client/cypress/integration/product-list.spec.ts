@@ -17,6 +17,7 @@ describe('Product List', () => {
 
   });
 
+  cy.wait(6000);
   it('Should type something in the name filter and have it return correct products', () => {
     // Filter for the product name "Apple"
     cy.wait(6000);
@@ -24,7 +25,7 @@ describe('Product List', () => {
     cy.wait(6000);
     // All of the listed products should have the name we are filtering by
     page.getProductListItems().each(e => {
-   cy.wrap(e).find('.product-list-name').should('have.text', 'Sobe - Orange Carrot');
+      cy.wrap(e).find('.product-list-name').should('have.text', 'Sobe - Orange Carrot');
     });
 
     // Secondary check to see if listed products have specified name
