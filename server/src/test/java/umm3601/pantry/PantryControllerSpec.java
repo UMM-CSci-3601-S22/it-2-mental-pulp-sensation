@@ -34,7 +34,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.javalin.core.JavalinConfig;
-import io.javalin.core.validation.ValidationException;
+
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
@@ -287,6 +287,42 @@ public class PantryControllerSpec {
     assertThrows(NotFoundResponse.class, () -> {
       pantryController.getPantry(ctx);
     });
+  }
+
+  @Test
+  public void addPantry() throws IOException {
+
+    String testNewPantry = "{"
+        + "\"name\": \"chips\","
+        + "\"prodID\": \"8733g5\","
+        + "\"date\": \"1/1/2011\""
+        + "}";
+    mockReq.setBodyContent(testNewPantry);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/pantry");
+
+    pantryController.addNewPantry(ctx);
+    String result = ctx.resultString();
+    String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
+
+    // Our status should be 201, i.e., our new pantry was successfully
+    // created. This is a named constant in the class HttpURLConnection.
+    assertEquals(HttpURLConnection.HTTP_CREATED, mockRes.getStatus());
+
+    // Successfully adding the pantry should return the newly generated MongoDB ID
+    // for that pantry.
+    assertNotEquals("", id);
+    assertEquals(1, db.getCollection("pantry").countDocuments(eq("_id", new ObjectId(id))));
+
+    // Verify that the pantry was added to the database with the correct ID
+    Document addedPantry = db.getCollection("pantry").find(eq("_id", new ObjectId(id))).first();
+
+    assertNotNull(addedPantry);
+    assertEquals("chips", addedPantry.getString("name"));
+    assertEquals("8733g5", addedPantry.getString("prodID"));
+    assertEquals("1/1/2011", addedPantry.getString("date"));
+
   }
 
   @Test
