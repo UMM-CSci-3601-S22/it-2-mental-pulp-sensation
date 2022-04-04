@@ -1,5 +1,30 @@
 <div fxLayout="row">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
     <app-product-card [product]="this.product"></app-product-card>
+    <form [formGroup]="changeProductForm" (ngSubmit)="submitForm();">
+    <mat-form-field>
+      <mat-label>Threshold</mat-label>
+      <input matInput placeholder="Threshold" formControlName="threshold" data-test="thresholdInput">
+      <mat-error *ngFor="let validation of addProductValidationMessages.threshold">
+        <mat-error class="error-message" data-test="thresholdError"
+            *ngIf="changeProductForm.get('threshold').hasError(validation.type) && (changeProductForm.get('threshold').dirty || changeProductForm.get('threshold').touched)">
+            {{validation.message}}
+          </mat-error>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-card-actions align="start">
+      <button
+      mat-button
+      type="button"
+      color="primary"
+      [disabled]="!changeProductForm.valid"
+      type="submit"
+      data-test="confirmChangeThreshold"
+      >
+      Change Threshold
+    </button>
+    </mat-card-actions>
+  </form>
   </div>
 </div>

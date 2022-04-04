@@ -50,5 +50,9 @@ export class ProductService {
   addProduct(newProduct: Product): Observable<string> {
     return this.httpClient.post<{ id: string }>(this.productUrl, newProduct).pipe(map(res => res.id));
   }
+
+  changeProduct(product: Product): Observable<string> {
+    return this.httpClient.put<{ id: string }>(this.productUrl, product).pipe(map(res => res.id));
+  }
 }
 

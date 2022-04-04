@@ -1,5 +1,8 @@
 [
   {
+    "_id": {
+      "$oid": "62250e35fc13ae51f90007d0"
+    },
     "name": "Sobe - Orange Carrot",
     "description": "Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\n\nDuis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.",
     "brand": "Ebert-Osinski",
