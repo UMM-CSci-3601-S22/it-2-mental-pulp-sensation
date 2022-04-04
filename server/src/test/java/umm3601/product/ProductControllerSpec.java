@@ -54,7 +54,7 @@ public class ProductControllerSpec {
   // `setupEach()`, and then exercised in the various tests below.
   private ProductController productController;
 
-  private ObjectId testId;
+  private ObjectId testId = new ObjectId();
 
   // The client and database that will be used
   // for all the tests in this spec file.
@@ -81,8 +81,7 @@ public class ProductControllerSpec {
     mongoClient = MongoClients.create(
         MongoClientSettings.builder()
             .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress(mongoAddr))))
-            .build()
-    );
+            .build());
     db = mongoClient.getDatabase("test");
   }
 
@@ -135,14 +134,15 @@ public class ProductControllerSpec {
             .append("notes", "We love Conner's Potatoes!")
             .append("lifespan", 45)
             .append("threshold", 10));
-    testId = new ObjectId();
+
     Document test = new Document()
         .append("_id", testId)
         .append("name", "Test")
         .append("description", "testing")
         .append("store", "testing")
         .append("brand", "Test")
-        .append("notes", "We love tests");
+        .append("notes", "We love tests")
+        .append("threshold", "3");
 
     productDocuments.insertMany(testProducts);
     productDocuments.insertOne(test);
@@ -165,12 +165,12 @@ public class ProductControllerSpec {
    * the fifth argument, which forces us to also provide the (default) value
    * for the fourth argument. There are two attributes we need to provide:
    *
-   *   - One is a `JsonMapper` that is used to translate between POJOs and JSON
-   *     objects. This is needed by almost every test.
-   *   - The other is `maxRequestSize`, which is needed for all the ADD requests,
-   *     since `ContextUtil` checks to make sure that the request isn't "too big".
-   *     Those tests fails if you don't provide a value for `maxRequestSize` for
-   *     it to use in those comparisons.
+   * - One is a `JsonMapper` that is used to translate between POJOs and JSON
+   * objects. This is needed by almost every test.
+   * - The other is `maxRequestSize`, which is needed for all the ADD requests,
+   * since `ContextUtil` checks to make sure that the request isn't "too big".
+   * Those tests fails if you don't provide a value for `maxRequestSize` for
+   * it to use in those comparisons.
    */
   private Context mockContext(String path, Map<String, String> pathParams) {
     return ContextUtil.init(
@@ -179,12 +179,9 @@ public class ProductControllerSpec {
         pathParams,
         HandlerType.INVALID,
         Map.ofEntries(
-          entry(JSON_MAPPER_KEY, javalinJackson),
-          entry(ContextUtil.maxRequestSizeKey,
-                new JavalinConfig().maxRequestSize
-          )
-        )
-      );
+            entry(JSON_MAPPER_KEY, javalinJackson),
+            entry(ContextUtil.maxRequestSizeKey,
+                new JavalinConfig().maxRequestSize)));
   }
 
   /**
@@ -193,7 +190,7 @@ public class ProductControllerSpec {
    * that array.
    *
    * @param ctx the `Context` whose body is assumed to contain
-   *  an array of `Product`s.
+   *            an array of `Product`s.
    * @return the array of `Product`s from the given `Context`.
    */
   private Product[] returnedProducts(Context ctx) {
@@ -208,7 +205,7 @@ public class ProductControllerSpec {
    * that Product.
    *
    * @param ctx the `Context` whose body is assumed to contain
-   *  a *single* `Product`.
+   *            a *single* `Product`.
    * @return the `Product` extracted from the given `Context`.
    */
   private Product returnedSingleProduct(Context ctx) {
@@ -217,10 +214,9 @@ public class ProductControllerSpec {
     return product;
   }
 
-
   @Test
   public void canGetAllProducts() throws IOException {
-
+    // Create our fake Javalin context
     String path = "api/products";
     Context ctx = mockContext(path);
 
@@ -232,9 +228,8 @@ public class ProductControllerSpec {
     // the class HttpCode.
     assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
     assertEquals(
-      db.getCollection("products").countDocuments(),
-      returnedProducts.length
-    );
+        db.getCollection("products").countDocuments(),
+        returnedProducts.length);
   }
 
   @Test
@@ -463,15 +458,15 @@ public class ProductControllerSpec {
   @Test
   public void addInvalidLifespanProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"name\": \"Turkey - XXL\","
-        + "\"description\": \"Homegrown Morris Turkey\","
-        + "\"brand\": \"The CSCI Dungeon\","
-        + "\"category\": \"meat\","
-        + "\"store\": \"Willie's\","
-        + "\"location\": \"\","
-        + "\"notes\": \"Don't eat the turkey Nic McPhee\","
-        + "\"lifespan\": -2,"
-        + "\"threshold\": 10"
+        + "\"productName\": \"Test Product\","
+        + "\"threshold\": 25,"
+        + "\"brand\": \"testers\","
+        + "\"description\": \"test@example.com\","
+        + "\"store\": \"coop\","
+        + "\"category\": \"llll\","
+        + "\"location\": \"top\","
+        + "\"lifespan\": -30,"
+        + "\"notes\": \"sad\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
     mockReq.setMethod("POST");
@@ -486,7 +481,7 @@ public class ProductControllerSpec {
   @Test
   public void addInvalidThresholdProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"name\": \"Turkey - XXL\","
+        + "\"productName\": \"Test Product\","
         + "\"description\": \"Homegrown Morris Turkey\","
         + "\"brand\": \"The CSCI Dungeon\","
         + "\"category\": \"meat\","
@@ -504,5 +499,26 @@ public class ProductControllerSpec {
     assertThrows(ValidationException.class, () -> {
       productController.addNewProduct(ctx);
     });
+  }
+
+  @Test
+  public void changeThresholdTest() throws IOException {
+    String id = testId.toHexString();
+    String testNewProduct = "{"
+        + "\"_id\": \"" + id + "\","
+        + "\"threshold\": 100"
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("PUT");
+
+    Context ctx = mockContext("api/products");
+    productController.changeProduct(ctx);
+
+    Context ctx2 = mockContext("api/products/{id}", Map.of("id", id));
+
+    productController.getProduct(ctx2);
+    Product resultProduct = returnedSingleProduct(ctx2);
+
+    assertEquals(100, resultProduct.threshold);
   }
 }

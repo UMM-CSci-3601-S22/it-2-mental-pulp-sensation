@@ -19,11 +19,11 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field>
-            <mat-label>Brand</mat-label>
-            <input matInput placeholder="Brand" formControlName="brand" required>
-            <mat-error *ngFor="let validation of addProductValidationMessages.brand">
-              <mat-error class="error-message" data-test="brandError"
+        <mat-form-field>
+          <mat-label>Brand</mat-label>
+          <input matInput placeholder="Brand" formControlName="brand" required>
+          <mat-error *ngFor="let validation of addProductValidationMessages.brand">
+            <mat-error clasaddProductForms="error-message" data-test="brandError"
                 *ngIf="addProductForm.get('brand').hasError(validation.type) && (addProductForm.get('brand').dirty || addProductForm.get('brand').touched)">
                 {{validation.message}}
               </mat-error>
