@@ -14,7 +14,9 @@ describe('Add pantry item', () => {
     cy.get('.product-card .product-card-name').should('have.text','Beef Ground Medium');
     page.addPantryButton().click();
     page.navigateToPantry();
-    // cy.url().should('match', /\/pantry$/);
+    cy.url().should('match', /\/pantry$/);
+    page.getPantryListBGM().click();
+    cy.get('.pantry-card .pantry-card-name').should('have.text','Beef Ground Medium');
   });
 });
 

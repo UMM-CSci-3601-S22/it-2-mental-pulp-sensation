@@ -10,9 +10,9 @@ export class ProductCardPage
     return cy.get('[data-test="AddPantryButton"]');
   }
   navigateToPantry(){
-    return cy.get('/pantry');
+    return cy.visit('/pantry');
   }
   getPantryListBGM() {
-    return cy.get('.pantry-nav-list .pantry-list-item').should('have.text','Beef Ground Medium');
+    return cy.get('.pantry-nav-list .pantry-list-item').contains('Beef Ground Medium');
 }
 }
