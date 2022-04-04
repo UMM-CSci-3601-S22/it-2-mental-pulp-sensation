@@ -1,30 +1,53 @@
 <div fxLayout="row">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
     <app-product-card [product]="this.product"></app-product-card>
-    <form [formGroup]="changeProductForm" (ngSubmit)="submitForm();">
-    <mat-form-field>
-      <mat-label>Threshold</mat-label>
-      <input matInput placeholder="Threshold" formControlName="threshold" data-test="thresholdInput">
-      <mat-error *ngFor="let validation of addProductValidationMessages.threshold">
-        <mat-error class="error-message" data-test="thresholdError"
-            *ngIf="changeProductForm.get('threshold').hasError(validation.type) && (changeProductForm.get('threshold').dirty || changeProductForm.get('threshold').touched)">
-            {{validation.message}}
-          </mat-error>
-      </mat-error>
-    </mat-form-field>
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" data-test="openFilter"
+        class="filter-card">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{panelOpenState ? 'Collapse Filters':'Expand Filters'}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-    <mat-card-actions align="start">
-      <button
-      mat-button
-      type="button"
-      color="primary"
-      [disabled]="!changeProductForm.valid"
-      type="submit"
-      data-test="confirmChangeThreshold"
-      >
-      Change Threshold
-    </button>
-    </mat-card-actions>
-  </form>
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <form [formGroup]="changeProductForm" (ngSubmit)="submitForm();">
+          <div>
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name" data-test="nameInput">
+            <mat-error *ngFor="let validation of changeProductFormMessages.name">
+              <mat-error class="error-message" data-test="nameError"
+                *ngIf="changeProductForm.get('name').hasError(validation.type) && (changeProductForm.get('name').dirty || changeProductForm.get('name').touched)">
+                {{validation.message}}
+              </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+              <mat-form-field>
+                <mat-label>Threshold</mat-label>
+                <input matInput placeholder="Threshold" formControlName="threshold" data-test="thresholdInput">
+                <mat-error *ngFor="let validation of changeProductFormMessages.threshold">
+                  <mat-error class="error-message" data-test="thresholdError"
+                    *ngIf="changeProductForm.get('threshold').hasError(validation.type) && (changeProductForm.get('threshold').dirty || changeProductForm.get('threshold').touched)">
+                    {{validation.message}}
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+
+
+                <mat-card-actions align="start">
+                  <button mat-button type="button" color="primary" [disabled]="!changeProductForm.valid" type="submit"
+                    data-test="confirmChange">
+                    Change Product
+                  </button>
+                </mat-card-actions>
+              </form>
+          </div>
+        </mat-card-content>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </div>

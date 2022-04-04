@@ -116,6 +116,10 @@ public class ProductController {
         .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
         .get();
 
+    System.out.println(newProduct.threshold);
+    if (newProduct.threshold == 0) {
+      System.out.print("true");
+    }
     Bson filter = Filters.eq("_id", newProduct._id);
     Bson update = Updates.set("threshold", newProduct.threshold);
     productCollection.findOneAndUpdate(filter, update);
