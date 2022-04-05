@@ -18,10 +18,17 @@ describe('Product profile' , () => {
 
   it('Should type something in the name filter and have it return correct products', () => {
     // Filter for the product with threshold of 3
-    cy.wait(6000);
     cy.get('[data-test="thresholdInput"]').type('3');
-    cy.wait(6000);
+    // This makes sure the list of searched for items has loaded before
+    // we iterate through them in the next step. Hopefully this will
+    // resolve the detached DOM problem.
+    page.getProductProfile().should('have.length.at.least', 0);
+    // cy.wait(3000);
     cy.get('[data-test="confirmChangeThreshold"]').click();
+    // This makes sure the list of searched for items has loaded before
+    // we iterate through them in the next step. Hopefully this will
+    // resolve the detached DOM problem.
+    page.getProductProfile().should('have.length.at.least', 0);
 
     // All of the listed products should have the name we are filtering by
     page.getProductProfile().each(e => {
