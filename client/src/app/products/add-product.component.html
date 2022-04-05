@@ -19,11 +19,11 @@
             </mat-error>
           </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Brand</mat-label>
-          <input matInput placeholder="Brand" formControlName="brand" required>
-          <mat-error *ngFor="let validation of addProductValidationMessages.brand">
-            <mat-error clasaddProductForms="error-message" data-test="brandError"
+          <mat-form-field>
+            <mat-label>Brand</mat-label>
+            <input matInput placeholder="Brand" formControlName="brand" required>
+            <mat-error *ngFor="let validation of addProductValidationMessages.brand">
+              <mat-error clasaddProductForms="error-message" data-test="brandError"
                 *ngIf="addProductForm.get('brand').hasError(validation.type) && (addProductForm.get('brand').dirty || addProductForm.get('brand').touched)">
                 {{validation.message}}
               </mat-error>
@@ -48,10 +48,37 @@
               <mat-option data-test="clickCoop" value="Pomme de Terre Food Coop">Pomme de Terre Food Coop</mat-option>
               <mat-option data-test="clickOther" value="Other">Other</mat-option>
             </mat-select>
-            <mat-error data-test="storeError" *ngIf="addProductForm.get('store').hasError('required')">You must make a
+            <mat-error data-test="storeError" *ngIf="addProductForm.get('store').hasError('required')">You must
+              make a
               selection</mat-error>
             <mat-error
               *ngIf="addProductForm.get('store').hasError('pattern') && !addProductForm.get('store').hasError('required')">
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Category</mat-label>
+            <mat-select required formControlName="category">
+              <mat-option data-test="clickGoods" value="Baked Goods">Baked Goods</mat-option>
+              <mat-option data-test="clickBake" value="Baking Supplies">Baking Supplies</mat-option>
+              <mat-option data-test="clickBev" value="Beverages">Beverages</mat-option>
+              <mat-option data-test="clickCleaning" value="Cleaning Products">Cleaning Products</mat-option>
+              <mat-option data-test="clickDairy" value="Dairy">Dairy</mat-option>
+              <mat-option data-test="clickDeli" value="Deli">Deli</mat-option>
+              <mat-option data-test="clickFrozen" value="Frozen Foods">Frozen Foods</mat-option>
+              <mat-option data-test="clickHerbs" value="Herbs and Spices">Herbs and Spices</mat-option>
+              <mat-option data-test="clickMeat" value="Meat">Meat</mat-option>
+              <mat-option data-test="clickPaper" value="Paper Products">Paper Products</mat-option>
+              <mat-option data-test="clickPet" value="Pet Supplies">Pet Supplies</mat-option>
+              <mat-option data-test="clickProduce" value="Produce">Produce</mat-option>
+              <mat-option data-test="clickStaples" value="Staples">Staples</mat-option>
+              <mat-option data-test="clickToilet" value="Toiletries">Toiletries</mat-option>
+              <mat-option data-test="clickMisc" value="Miscellaneous>">Miscellaneous</mat-option>
+            </mat-select>
+            <mat-error data-test="categoryError" *ngIf="addProductForm.get('category').hasError('required')">You must make a
+              selection</mat-error>
+            <mat-error
+              *ngIf="addProductForm.get('category').hasError('pattern') && !addProductForm.get('category').hasError('required')">
             </mat-error>
           </mat-form-field>
 
@@ -80,12 +107,6 @@
           <mat-form-field>
             <mat-label>Description</mat-label>
             <input matInput placeholder="Description" formControlName="description">
-            <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Category</mat-label>
-            <input matInput placeholder="Category" formControlName="category">
             <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
           </mat-form-field>
 

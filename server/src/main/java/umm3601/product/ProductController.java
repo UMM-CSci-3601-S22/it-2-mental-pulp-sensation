@@ -116,13 +116,17 @@ public class ProductController {
         .check(pdr -> pdr.threshold >= 0, "Product's threshold can't be negative")
         .get();
 
-    System.out.println(newProduct.threshold);
-    if (newProduct.threshold == 0) {
-      System.out.print("true");
-    }
     Bson filter = Filters.eq("_id", newProduct._id);
-    Bson update = Updates.set("threshold", newProduct.threshold);
-    productCollection.findOneAndUpdate(filter, update);
+    productCollection.findOneAndUpdate(filter, Updates.set("name", newProduct.name));
+    productCollection.findOneAndUpdate(filter, Updates.set("brand", newProduct.brand));
+    productCollection.findOneAndUpdate(filter, Updates.set("store", newProduct.store));
+    productCollection.findOneAndUpdate(filter, Updates.set("category", newProduct.category));
+    productCollection.findOneAndUpdate(filter, Updates.set("location", newProduct.location));
+    productCollection.findOneAndUpdate(filter, Updates.set("lifespan", newProduct.lifespan));
+    productCollection.findOneAndUpdate(filter, Updates.set("threshold", newProduct.threshold));
+    productCollection.findOneAndUpdate(filter, Updates.set("description", newProduct.description));
+    productCollection.findOneAndUpdate(filter, Updates.set("notes", newProduct.notes));
+
     ctx.status(HttpCode.CREATED);
     ctx.json(Map.of("id", newProduct._id));
   }

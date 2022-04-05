@@ -46,7 +46,11 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
 
     threshold: [
       { type: 'min', message: 'Threshold cannot be negative' }
-    ]
+    ],
+
+    category: [
+      { type: 'required', message: 'Must provide a category.' },
+    ],
   };
 
   panelOpenState = false;
@@ -87,8 +91,8 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
   }
   createForms() {
     this.changeProductForm = this.fb.group({
-      _id: new FormControl(),
-      name: new FormControl('', Validators.compose([
+      _id: new FormControl(this.product._id),
+      name: new FormControl(this.product.name, Validators.compose([
         Validators.minLength(0),
         // In the real world you'd want to be very careful about having
         // an upper limit like this because people can sometimes have
@@ -103,13 +107,13 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
           }
         },
       ])),
-      brand: new FormControl(),
-      store: new FormControl(),
-      lifespan: new FormControl(),
-      description: new FormControl(),
-      category: new FormControl(),
-      location: new FormControl(),
-      notes: new FormControl(),
+      brand: new FormControl(this.product.brand),
+      store: new FormControl(this.product.store),
+      lifespan: new FormControl(this.product.lifespan),
+      description: new FormControl(this.product.description),
+      category: new FormControl(this.product.category),
+      location: new FormControl(this.product.location),
+      notes: new FormControl(this.product.notes),
       threshold: new FormControl(this.product.threshold, Validators.compose([
         Validators.min(0),
         Validators.pattern('^[0-9]+$')
@@ -142,9 +146,8 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
-    this.changeProductForm.value._id = this.id;
     this.productService.changeProduct(this.changeProductForm.value).subscribe(newID => {
-      this.snackBar.open('Changed Threshold to ' + this.changeProductForm.value.threshold, null, {
+      this.snackBar.open('Updated Product Fields', null, {
         duration: 2000,
       });
       this.reloadComponent();
