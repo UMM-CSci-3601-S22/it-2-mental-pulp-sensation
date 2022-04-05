@@ -14,7 +14,7 @@ describe('shoppingList list', () => {
 
 
     it('Should type something in the name filter and check that it returned correct elements', () => {
-        // Filter for user 'Lynn Ferguson'
+        // Filter for tomatoes
         cy.get('[data-test=shoppingListNameInput]').type('Tomatoes');
 
         // All of the user cards should have the name we are filtering by
@@ -29,7 +29,7 @@ describe('shoppingList list', () => {
       });
 
       it('Should search by name for a shoppingList name that is not the first name and return correct element', () => {
-        // Filter for user 'Lynn Ferguson'
+        // Filter for honey
         cy.get('[data-test=shoppingListNameInput]').type('Honey');
 
         // All of the user cards should have the name we are filtering by
