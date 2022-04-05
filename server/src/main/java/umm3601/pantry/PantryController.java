@@ -30,8 +30,7 @@ import io.javalin.http.NotFoundResponse;
  */
 public class PantryController {
 
-  private static final String DATE_KEY = "date";
-  private static final String NOTES_KEY = "notes";
+  // private static final String DATE_KEY = "date";
   private static final String NAME_KEY = "name";
   private static final String PROD_KEY = "prodID";
 
@@ -125,23 +124,7 @@ public class PantryController {
    * @param ctx a Javalin HTTP context
    */
   public void addNewPantry(Context ctx) {
-    /*
-     * The follow chain of statements uses the Javalin validator system
-     * to verify that instance of `Pantry` provided in this context is
-     * a "legal" pantry. It checks the following things (in order):
-     * - The pantry has a value for the name (`usr.name != null`)
-     * - The pantry name is not blank (`usr.name.length > 0`)
-     * - The provided email is valid (matches EMAIL_REGEX)
-     * - The provided age is > 0
-     * - The provided role is valid (one of "admin", "editor", or "viewer")
-     * - A non-blank company is provided
-     */
-    Pantry newPantry = ctx.bodyValidator(Pantry.class)
-        .check(usr -> usr.name != null && usr.name.length() > 0,
-            "Pantry must have a non-empty pantry name")
-        .check(usr -> usr.prodID != null && usr.prodID.length() > 0,
-            "Pantry must have a non-empty pantry name")
-        .get();
+    Pantry newPantry = ctx.bodyAsClass(Pantry.class);
 
     pantryCollection.insertOne(newPantry);
 

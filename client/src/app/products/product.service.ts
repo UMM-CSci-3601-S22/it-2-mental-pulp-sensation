@@ -55,3 +55,4 @@ export class ProductService {
     return this.httpClient.put<{ id: string }>(this.productUrl, product).pipe(map(res => res.id));
   }
 }
+

@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.javalin.core.JavalinConfig;
-import io.javalin.core.validation.ValidationException;
+
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
@@ -99,8 +98,7 @@ public class PantryControllerSpec {
     mongoClient = MongoClients.create(
         MongoClientSettings.builder()
             .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress(mongoAddr))))
-            .build()
-    );
+            .build());
     db = mongoClient.getDatabase("test");
   }
 
@@ -124,27 +122,23 @@ public class PantryControllerSpec {
         new Document()
             .append("prodID", "588935f5")
             .append("name", "apple")
-            .append("date", "1/20/2022")
-            .append("notes", "yummy"));
+            .append("date", "1/20/2022"));
     testPantry.add(
         new Document()
-        .append("prodID", "6f992bf")
-        .append("name", "Banana")
-        .append("date", "2/20/2022")
-        .append("notes", "good source of potassium"));
+            .append("prodID", "6f992bf")
+            .append("name", "Banana")
+            .append("date", "2/20/2022"));
     testPantry.add(
         new Document()
-        .append("prodID", "8f37c")
-          .append("name", "PORK LOIN")
-          .append("date", "1/30/2022")
-          .append("notes", "goods oup"));
+            .append("prodID", "8f37c")
+            .append("name", "PORK LOIN")
+            .append("date", "1/30/2022"));
     samsId = new ObjectId();
     Document sam = new Document()
         .append("_id", samsId)
         .append("prodID", "f992bf8f37c01")
         .append("name", "corn FLAKEs")
-        .append("date", "5/20/2020")
-        .append("notes", "lmao");
+        .append("date", "5/20/2020");
     pantryDocuments.insertMany(testPantry);
     pantryDocuments.insertOne(sam);
 
@@ -166,12 +160,12 @@ public class PantryControllerSpec {
    * the fifth argument, which forces us to also provide the (default) value
    * for the fourth argument. There are two attributes we need to provide:
    *
-   *   - One is a `JsonMapper` that is used to translate between POJOs and JSON
-   *     objects. This is needed by almost every test.
-   *   - The other is `maxRequestSize`, which is needed for all the ADD requests,
-   *     since `ContextUtil` checks to make sure that the request isn't "too big".
-   *     Those tests fails if you don't provide a value for `maxRequestSize` for
-   *     it to use in those comparisons.
+   * - One is a `JsonMapper` that is used to translate between POJOs and JSON
+   * objects. This is needed by almost every test.
+   * - The other is `maxRequestSize`, which is needed for all the ADD requests,
+   * since `ContextUtil` checks to make sure that the request isn't "too big".
+   * Those tests fails if you don't provide a value for `maxRequestSize` for
+   * it to use in those comparisons.
    */
   private Context mockContext(String path, Map<String, String> pathParams) {
     return ContextUtil.init(
@@ -180,12 +174,9 @@ public class PantryControllerSpec {
         pathParams,
         HandlerType.INVALID,
         Map.ofEntries(
-          entry(JSON_MAPPER_KEY, javalinJackson),
-          entry(ContextUtil.maxRequestSizeKey,
-                new JavalinConfig().maxRequestSize
-          )
-        )
-      );
+            entry(JSON_MAPPER_KEY, javalinJackson),
+            entry(ContextUtil.maxRequestSizeKey,
+                new JavalinConfig().maxRequestSize)));
   }
 
   /**
@@ -194,7 +185,7 @@ public class PantryControllerSpec {
    * that array.
    *
    * @param ctx the `Context` whose body is assumed to contain
-   *  an array of `Pantry`s.
+   *            an array of `Pantry`s.
    * @return the array of `Pantry`s from the given `Context`.
    */
   private Pantry[] returnedPantry(Context ctx) {
@@ -209,7 +200,7 @@ public class PantryControllerSpec {
    * that Pantry.
    *
    * @param ctx the `Context` whose body is assumed to contain
-   *  a *single* `Pantry`.
+   *            a *single* `Pantry`.
    * @return the `Pantry` extracted from the given `Context`.
    */
   private Pantry returnedSinglePantryItem(Context ctx) {
@@ -232,9 +223,8 @@ public class PantryControllerSpec {
     // the class HttpCode.
     assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
     assertEquals(
-      db.getCollection("pantry").countDocuments(),
-      returnedPantry.length
-    );
+        db.getCollection("pantry").countDocuments(),
+        returnedPantry.length);
   }
 
   @Test
@@ -252,8 +242,6 @@ public class PantryControllerSpec {
     }
   }
 
-
-
   @Test
   public void getPantryByNameAndNotes() throws IOException {
     mockReq.setQueryString("name=corn FLAKEs&notes=lmao");
@@ -266,7 +254,7 @@ public class PantryControllerSpec {
     assertEquals(1, resultPantry.length);
     for (Pantry pantry : resultPantry) {
       assertEquals("corn FLAKEs", pantry.name);
-      assertEquals("lmao", pantry.notes);
+
     }
   }
 
@@ -307,7 +295,6 @@ public class PantryControllerSpec {
     String testNewPantry = "{"
         + "\"name\": \"chips\","
         + "\"prodID\": \"8733g5\","
-        + "\"notes\": \"hey\","
         + "\"date\": \"1/1/2011\""
         + "}";
     mockReq.setBodyContent(testNewPantry);
@@ -334,84 +321,10 @@ public class PantryControllerSpec {
     assertNotNull(addedPantry);
     assertEquals("chips", addedPantry.getString("name"));
     assertEquals("8733g5", addedPantry.getString("prodID"));
-    assertEquals("hey", addedPantry.getString("notes"));
     assertEquals("1/1/2011", addedPantry.getString("date"));
 
-
   }
 
-  @Test
-  public void addInvalidProdIDPantry() throws IOException {
-    String testNewPantry = "{"
-    + "\"name\": \"chips\","
-    + "\"prodID\": \"\","
-    + "\"notes\": \"hey\","
-    + "\"date\": \"1/1/2011\""
-    + "}";
-    mockReq.setBodyContent(testNewPantry);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/pantry");
-
-    assertThrows(ValidationException.class, () -> {
-      pantryController.addNewPantry(ctx);
-    });
-  }
-
-
-  @Test
-  public void addNullNamePantry() throws IOException {
-    String testNewPantry = "{"
-    + "\"prodID\": \"8733g5\","
-    + "\"notes\": \"hey\","
-    + "\"date\": \"1/1/2011\""
-    + "}";
-    mockReq.setBodyContent(testNewPantry);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/pantry");
-
-    assertThrows(ValidationException.class, () -> {
-      pantryController.addNewPantry(ctx);
-    });
-  }
-
-  @Test
-  public void addInvalidNamePantry() throws IOException {
-    String testNewPantry = "{"
-    + "\"name\": \"\","
-    + "\"prodID\": \"8733g5\","
-    + "\"notes\": \"hey\","
-    + "\"date\": \"1/1/2011\""
-    + "}";
-    mockReq.setBodyContent(testNewPantry);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/pantry");
-
-    assertThrows(ValidationException.class, () -> {
-      pantryController.addNewPantry(ctx);
-    });
-  }
-
-
-
-  @Test
-  public void addNullProdIDPantry() throws IOException {
-    String testNewPantry = "{"
-    + "\"name\": \"chips\","
-    + "\"notes\": \"hey\","
-    + "\"date\": \"1/1/2011\""
-    + "}";
-    mockReq.setBodyContent(testNewPantry);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/pantry");
-
-    assertThrows(ValidationException.class, () -> {
-      pantryController.addNewPantry(ctx);
-    });
-  }
   @Test
   public void deletePantry() throws IOException {
     String testID = samsId.toHexString();

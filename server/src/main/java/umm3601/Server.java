@@ -49,7 +49,9 @@ public class Server {
     ShoppingListController shoppingListController = new ShoppingListController(database);
     PantryController pantryController = new PantryController(database);
 
-    Javalin server = Javalin.create(config -> config.registerPlugin(new RouteOverviewPlugin("/api")));
+    Javalin server = Javalin.create(config -> {
+      config.registerPlugin(new RouteOverviewPlugin("/api"));
+    });
     /*
      * We want to shut the `mongoClient` down if the server either
      * fails to start, or when it's shutting down for whatever reason.
