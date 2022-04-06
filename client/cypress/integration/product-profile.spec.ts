@@ -17,6 +17,17 @@ describe('Product List' , () => {
   it('Should list product', () => {
     page.getProductProfile().get('.product-card-name').should('have.text', 'Sobe - Orange Carrot');
   });
+});
+
+  describe('Editing the Product' , () => {
+
+    before(() => {
+      cy.task('seed:database');
+    });
+
+    beforeEach(() => {
+      page.navigateTo();
+    });
 
   it('Should type something in the name edit field and have it return correct changes', () => {
     // Check the it has the name we are expecting

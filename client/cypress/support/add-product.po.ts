@@ -26,11 +26,9 @@ export class AddProductPage {
     this.getFormField('name').type(newProduct.name);
     this.getFormField('brand').type(newProduct.brand);
     this.getFormField('store').click().get('[data-test=clickWillies]').click();
+    this.getFormField('category').click().get('[data-test=clickGoods]').click();
     if (newProduct.description) {
       this.getFormField('description').type(newProduct.description);
-    }
-    if (newProduct.category) {
-      this.getFormField('category').type(newProduct.category);
     }
     if (newProduct.location) {
       this.getFormField('location').type(newProduct.location);
