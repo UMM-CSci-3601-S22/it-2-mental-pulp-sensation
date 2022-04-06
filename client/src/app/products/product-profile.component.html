@@ -2,7 +2,7 @@
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
     <app-product-card [product]="this.product"></app-product-card>
     <mat-accordion>
-      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" data-test="openFilter"
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" data-test="openEditDropDown"
         class="filter-card">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -40,7 +40,7 @@
               <div>
                 <mat-form-field>
                   <mat-label>Store</mat-label>
-                  <mat-select formControlName="store">
+                  <mat-select formControlName="store" data-test="storeDropDown">
                     <mat-option data-test="clickWillies" value="Willies">Willies</mat-option>
                     <mat-option data-test="clickCoop" value="Pomme de Terre Food Coop">Pomme de Terre Food Coop
                     </mat-option>
@@ -57,7 +57,7 @@
               <div>
                 <mat-form-field>
                   <mat-label>Category</mat-label>
-                  <mat-select formControlName="category">
+                  <mat-select formControlName="category" data-test="categoryDropDown">
                     <mat-option data-test="clickGoods" value="Baked Goods">Baked Goods</mat-option>
                     <mat-option data-test="clickBake" value="Baking Supplies">Baking Supplies</mat-option>
                     <mat-option data-test="clickBev" value="Beverages">Beverages</mat-option>
