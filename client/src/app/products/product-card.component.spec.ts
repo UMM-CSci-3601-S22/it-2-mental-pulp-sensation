@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
 import { MockPantryService } from 'src/testing/pantry.service.mock';
-import { MockProductService } from 'src/testing/product.service.mock';
 import { PantryService } from '../pantry/pantry.service';
 
 import { ProductCardComponent } from './product-card.component';

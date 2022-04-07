@@ -80,4 +80,10 @@ describe('List of Products in Pantry', () => {
     expect(productList.serverFilteredProducts.some((product: Product) => product.name === 'Potato')).toBe(true);
   });
 
+  it('unsubs stuff', () => {
+    expect(productList.getProductsSub).toBeTruthy();
+    productList.unsub();
+    expect(productList.getProductsSub).toBeTruthy();
+  });
+
 });

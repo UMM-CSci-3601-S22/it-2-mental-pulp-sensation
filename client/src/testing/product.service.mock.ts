@@ -42,10 +42,12 @@ export class MockProductService extends ProductService {
     // If the specified ID is for the first test product,
     // return that product, otherwise return `null` so
     // we can test illegal product requests.
-    if (id === MockProductService.testProducts[0]._id) {
-      return of(MockProductService.testProducts[0]);
-    } else {
-      return of(null);
+
+    for(let i = 0; i < 3; i++){
+      if (id === MockProductService.testProducts[i]._id) {
+        return of(MockProductService.testProducts[i]);
+      }
     }
+    return of(null);
   }
 }

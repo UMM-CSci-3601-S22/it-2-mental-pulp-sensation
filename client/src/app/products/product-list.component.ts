@@ -40,8 +40,6 @@ export class ProductListComponent implements OnInit {
     }).subscribe(returnedProducts => {
       this.serverFilteredProducts = returnedProducts;
       this.updateFilter();
-    }, err => {
-      console.log(err);
     });
   }
 

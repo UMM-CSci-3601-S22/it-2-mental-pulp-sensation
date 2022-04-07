@@ -125,6 +125,16 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
     // We subscribe to the parameter map here so we'll be notified whenever
     // that changes (i.e., when the URL changes) so this component will update
     // to display the newly requested product.
+    // this.product._id = 'beans';
+    // this.product.name = 'beans';
+    // this.product.brand = 'beans';
+    // this.product.store = 'beans';
+    // this.product.notes = 'beans';
+    // this.product.description = 'beans';
+    // this.product.lifespan = 0;
+    // this.product.category = 'beans';
+    // this.product.threshold = 0;
+    // this.product.location = 'beans';
     this.route.paramMap.subscribe((pmap) => {
       this.id = pmap.get('id');
       if (this.getProductSub) {
@@ -134,7 +144,6 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
         this.product = product;
         this.createForms();
       });
-      this.notSoCreateForms();
     });
 
   }
@@ -147,14 +156,8 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.productService.changeProduct(this.changeProductForm.value).subscribe(newID => {
-      this.snackBar.open('Updated Product Fields', null, {
-        duration: 2000,
-      });
+      this.snackBar.open('Updated Product Fields', null, {duration: 2000,});
       this.reloadComponent();
-    }, err => {
-      this.snackBar.open('Failed to add the product', 'OK', {
-        duration: 5000,
-      });
     });
   }
 
