@@ -80,9 +80,17 @@ export class PantryService {
     // Send post request to add a new pantry with the pantry data as the body.
     return this.httpClient.post<{ id: string }>(this.pantryUrl, newPantry).pipe(map(res => res.id));
   }
-  removePantry(TargetPantry: Pantry): Observable<string> {
+  removePantry(targetPantry: Pantry): Observable<string> {
 
-    return this.httpClient.delete<{ id: string }>(this.pantryUrl, TargetPantry).pipe(map(res => res.id));
+    const bruh: Pantry =
+    {
+      _id: targetPantry._id,
+      prodID: targetPantry._id,
+      name: targetPantry.name,
+      date: '12/5/2020'
+    };
+
+    return this.httpClient.delete<{ id: string }>(this.pantryUrl + '/' + bruh._id).pipe(map(res => res.id));
 
   }
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Pantry } from '../pantry';
+import { PantryService } from '../pantry.service';
 
 @Component({
   selector: 'app-pantry-card',
@@ -16,15 +19,16 @@ export class PantryCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  removePantry(pantry: pantry){
+  removePantry(pantry: Pantry){
     this.pantryService.removePantry(pantry).subscribe(newID => {
-      this.snackBar.open('removing item ' + pantry.name+' from Pantry', null, {
-        duration: 2000,
-      });
+      ;
       this.router.navigate([]);
     }, err => {
       this.snackBar.open('Failed to remove the item', 'OK', {
         duration: 5000,
+      });
+      this.snackBar.open('removing item ' + pantry.name+' from Pantry', null, {
+        duration: 2000,
       });
     });
   }
@@ -32,4 +36,3 @@ export class PantryCardComponent implements OnInit {
 
   }
 
-}
