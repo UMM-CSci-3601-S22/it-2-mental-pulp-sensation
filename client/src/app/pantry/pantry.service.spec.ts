@@ -160,5 +160,12 @@ describe('Pantry service: ', () => {
 
     req.flush({ id: 'testid' });
   });
+  it('removePantry() should remove the pantry item', () => {
+    pantryService.removePantry({_id: '2',prodID: 'brim',date: 'May 15, 2022',name: 'pog'}).subscribe(
+      id => expect(id).toBe('2')
+    );
+    const req = httpTestingController.expectOne(pantryService.pantryUrl + '/2');
+    req.flush({ id: '2' });
+  });
 
 });
