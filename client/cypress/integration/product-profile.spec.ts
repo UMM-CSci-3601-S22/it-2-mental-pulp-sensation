@@ -36,6 +36,6 @@ describe('Product profile' , () => {
     //   cy.wrap(e).find('[data-test="thresholdTest"]').should('have.text', 'Threshold: 3');
     // });
     page.getProductProfile().find('.product-card-threshold').each(el =>
-      expect(el.text()).to.equal('3'));
+      expect(el.text()).to.equal('Threshold: 3'));
   });
 });
