@@ -145,6 +145,7 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
         this.createForms();
       });
     });
+    this.notSoCreateForms();
 
   }
 
@@ -156,10 +157,15 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.productService.changeProduct(this.changeProductForm.value).subscribe(newID => {
-      this.snackBar.open('Updated Product Fields', null, {duration: 2000,});
+      this.snackBar.open('Updated Product Fields', null, { duration: 2000, });
       this.reloadComponent();
+    }, err => {
+      this.snackBar.open('Failed to add the product', 'OK', {
+        duration: 5000,
+      });
     });
   }
+
 
   reloadComponent() {
     const currentUrl = this.router.url;

@@ -1,9 +1,9 @@
 import { AppPage } from 'cypress/support/app.po';
-import { ProductProfilePage  } from 'cypress/support/product-profile.po';
+import { ProductProfilePage } from 'cypress/support/product-profile.po';
 
 const page = new ProductProfilePage();
 
-describe('Product profile' , () => {
+describe('Product profile', () => {
 
   before(() => {
     cy.task('seed:database');
@@ -19,21 +19,23 @@ describe('Product profile' , () => {
   });
 });
 
-  describe('Editing the Product' , () => {
+describe('Editing the Product', () => {
 
-    before(() => {
-      cy.task('seed:database');
-    });
+  before(() => {
+    cy.task('seed:database');
+  });
 
-    beforeEach(() => {
-      page.navigateTo();
-    });
+  beforeEach(() => {
+    page.navigateTo();
+  });
 
   it('Should type something in the name edit field and have it return correct changes', () => {
     // Check the it has the name we are expecting
     cy.get('.product-card-name').should('have.text', 'Sobe - Orange Carrot');
-    cy.get('[data-test="openEditDropDown"]').click().get('[data-test="nameInput"]').clear().type('Salmonella');
+    cy.get('[data-test="openEditDropDown"]').click().get('[data-test="nameInput"]').clear();
+    cy.get('[data-test="nameInput"]').click().type('Salmonella');
     cy.get('[data-test="confirmChange"]').click();
+    cy.wait(1000);
     // Check that it changed to the correct new name
     cy.get('.product-card-name').should('have.text', 'Salmonella');
   });
@@ -115,7 +117,7 @@ describe('Product profile' , () => {
     cy.get('.product-card-notes').should('have.text', 'Isn\'t good for the heart');
   });
 
-  it('Should have accumulated all of these changes', ()=> {
+  it('Should have accumulated all of these changes', () => {
     cy.get('.product-card-name').should('have.text', 'Salmonella');
     cy.get('.product-card-brand').should('have.text', 'Raw Meat');
     cy.get('.product-card-category').should('contain', 'Baked Goods');
