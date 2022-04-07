@@ -3,7 +3,7 @@ import { ProductProfilePage  } from 'cypress/support/product-profile.po';
 
 const page = new ProductProfilePage();
 
-describe('Product List' , () => {
+describe('Product profile' , () => {
 
   before(() => {
     cy.task('seed:database');

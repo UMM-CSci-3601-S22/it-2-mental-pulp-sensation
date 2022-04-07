@@ -19,12 +19,18 @@ describe('Product List', () => {
 
   it('Should type something in the name filter and have it return correct products', () => {
     // Filter for the product name "Apple"
-    cy.wait(6000);
+    // cy.wait(12000);
     cy.get('[data-test=productNameInput]').type('Sobe - Orange Carrot');
-    cy.wait(6000);
+    // cy.wait(6000);
+
+    // This makes sure the list of searched for items has loaded before
+    // we iterate through them in the next step. Hopefully this will
+    // resolve the detached DOM problem.
+    page.getProductListItems().should('have.length.at.least', 0);
+
     // All of the listed products should have the name we are filtering by
     page.getProductListItems().each(e => {
-   cy.wrap(e).find('.product-list-name').should('have.text', 'Sobe - Orange Carrot');
+      cy.wrap(e).find('.product-list-name').should('have.text', 'Sobe - Orange Carrot');
     });
 
     // Secondary check to see if listed products have specified name

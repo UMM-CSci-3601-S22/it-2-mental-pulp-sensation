@@ -1,9 +1,12 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockPantryService } from 'src/testing/pantry.service.mock';
 import { ActivatedRouteStub } from '../../testing/activated-route-stub';
 import { MockProductService } from '../../testing/product.service.mock';
+import { PantryService } from '../pantry/pantry.service';
 import { Product } from './product';
 import { ProductCardComponent } from './product-card.component';
 import { ProductProfileComponent } from './product-profile.component';
@@ -35,7 +38,9 @@ describe('ProductProfileComponent', () => {
       declarations: [ProductProfileComponent, ProductCardComponent],
       providers: [
         { provide: ProductService, useValue: new MockProductService() },
-        { provide: ActivatedRoute, useValue: activatedRoute }
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        {provide: PantryService, useValue: new MockPantryService() },
+        {provide: MatSnackBar, useValue: MatSnackBar }
       ]
     })
       .compileComponents();

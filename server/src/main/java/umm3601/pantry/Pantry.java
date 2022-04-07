@@ -31,5 +31,4 @@ public class Pantry {
   public String prodID;
   public String name;
   public String date;
-  public String notes;
 }
