@@ -75,9 +75,10 @@ export class PantryService {
       name: newProduct.name,
       date: '12/5/2020'
     };
-    console.log('calling add pantry');
-
     // Send post request to add a new pantry with the pantry data as the body.
     return this.httpClient.post<{ id: string }>(this.pantryUrl, newPantry).pipe(map(res => res.id));
+  }
+  removePantry(targetPantry: Pantry): Observable<string> {
+    return this.httpClient.delete<{ id: string }>(this.pantryUrl + '/' + targetPantry._id,).pipe(map(res => res.id));
   }
 }
