@@ -21,6 +21,11 @@ describe('Pantry List', () => {
     // Filter for the pantry name "Apple"
     cy.get('[data-test=openFilter]').click().get('[data-test=pantryNameInput]').type('Apples');
 
+    // This makes sure the list of searched for items has loaded before
+    // we iterate through them in the next step. Hopefully this will
+    // resolve the detached DOM problem.
+    page.getPantryListItems().should('have.length.at.least', 0);
+
     // All of the listed pantrys should have the name we are filtering by
     page.getPantryListItems().each(e => {
       cy.wrap(e).find('.pantry-list-name').should('have.text', 'Apples');
@@ -35,6 +40,11 @@ describe('Pantry List', () => {
   it('Should type something in the name filter and have it return correct pantrys', () => {
     // Filter for the pantry name "Apple"
     cy.get('[data-test=openFilter]').click().get('[data-test=pantryDateInput]').type('7/27/2021');
+
+    // This makes sure the list of searched for items has loaded before
+    // we iterate through them in the next step. Hopefully this will
+    // resolve the detached DOM problem.
+    page.getPantryListItems().should('have.length.at.least', 0);
 
     // All of the listed pantrys should have the name we are filtering by
     page.getPantryListItems().each(e => {
