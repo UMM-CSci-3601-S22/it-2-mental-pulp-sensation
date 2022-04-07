@@ -61,21 +61,7 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
   notSoCreateForms() {
     this.changeProductForm = this.fb.group({
       _id: new FormControl(),
-      name: new FormControl('', Validators.compose([
-        Validators.minLength(0),
-        // In the real world you'd want to be very careful about having
-        // an upper limit like this because people can sometimes have
-        // very long names. This demonstrates that it's possible, though,
-        // to have maximum length limits.
-        Validators.maxLength(50),
-        (fc) => {
-          if (fc.value.toLowerCase() === 'abc123' || fc.value.toLowerCase() === '123abc') {
-            return ({ existingName: true });
-          } else {
-            return null;
-          }
-        },
-      ])),
+      name: new FormControl(),
       brand: new FormControl(),
       store: new FormControl(),
       lifespan: new FormControl(),
@@ -83,10 +69,7 @@ export class ProductProfileComponent implements OnInit, OnDestroy {
       category: new FormControl(),
       location: new FormControl(),
       notes: new FormControl(),
-      threshold: new FormControl('', Validators.compose([
-        Validators.min(0),
-        Validators.pattern('^[0-9]+$')
-      ]))
+      threshold: new FormControl()
     });
   }
   createForms() {
