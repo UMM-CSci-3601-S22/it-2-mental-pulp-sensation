@@ -27,7 +27,7 @@ export class PantryCardComponent implements OnInit {
       this.snackBar.open('Failed to remove the item', 'OK', {
         duration: 5000,
       });
-      this.snackBar.open('removing item ' + pantry.name+' from Pantry', null, {
+      this.snackBar.open('Removing item ' + pantry.name+' from Pantry', null, {
         duration: 2000,
       });
     });
