@@ -22,6 +22,8 @@ describe('Add product', () => {
     page.getFormField('store').click().get('[data-test=clickWillies]').click();
     page.addProductButton().should('be.disabled');
     page.getFormField('brand').type('potatoBrand');
+    page.addProductButton().should('be.disabled');
+    page.getFormField('category').click().get('[data-test=clickGoods]').click();
     page.addProductButton().should('be.enabled');
     // page.getFormField('lifespan').type('number');
     // page.addProductButton().should('be.disabled');
@@ -92,6 +94,7 @@ describe('Add product', () => {
         name: 'Test Product',
         brand: 'umm',
         store: 'Willies',
+        category: 'Baked Goods',
         lifespan: 20,
         threshold: 20
       };

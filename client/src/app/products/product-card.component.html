@@ -1,19 +1,29 @@
 <mat-card class="product-card" *ngIf="this.product">
-  <mat-card-header>
-    <mat-card-title class="product-card-name">{{this.product.name}}</mat-card-title>
-    <mat-card-subtitle class="product-card-brand">{{this.product.brand}}</mat-card-subtitle>
-    <mat-card-subtitle class="product-card-description">{{this.product.description}}</mat-card-subtitle>
-  </mat-card-header>
-
-  <mat-card-content *ngIf="!this.simple">
-    <h4 class="product-card-category">Category: {{this.product.category}}</h4>
-    <h4 class="product-card-store">Store: {{this.product.store}}</h4>
-    <p class="product-card-location">Location: {{this.product.location}}</p>
-    <h3 class="product-card-lifespan">Lifespan: {{this.product.lifespan}}</h3>
-    <h3 class="product-card-threshold" data-test="thresholdTest">Threshold: {{this.product.threshold}}</h3>
-
+  <div>
+    <mat-card-header>
+      <mat-card-title class="product-card-name">{{this.product.name}}</mat-card-title>
+    </mat-card-header>
+    <hr>
+  </div>
+  <mat-card-content *ngIf="!this.simple" class="cardInfo">
+    <b>Brand:</b>
+    <p class="product-card-brand">{{this.product.brand}}</p>
+    <b>Store:</b>
+    <p class="product-card-store">{{this.product.store}}</p>
+    <b>Category:</b>
+    <p class="product-card-category">{{this.product.category}}</p>
+    <b>Location:</b>
+    <p class="product-card-location">{{this.product.location}}</p>
+    <b>Lifespan:</b>
+    <p class="product-card-lifespan">{{this.product.lifespan}}</p>
+    <b>Threshold:</b>
+    <p class="product-card-threshold">{{this.product.threshold}}</p>
     <div>
-      <h4>Notes</h4>
+      <b>Description:</b>
+      <p class="product-card-description">{{this.product.description}}</p>
+    </div>
+    <div>
+      <b>Notes:</b>
       <p class="product-card-notes">{{this.product.notes}}</p>
     </div>
 

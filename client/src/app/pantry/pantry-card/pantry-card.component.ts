@@ -23,12 +23,10 @@ export class PantryCardComponent implements OnInit {
     this.pantryService.removePantry(pantry).subscribe(newID => {
       ;
       this.router.navigate([]);
-      this.snackBar.open('Removing item ' + pantry.name+' from Pantry', null, {
+      this.snackBar.open('Removing item ' + pantry.name +' from Pantry', null, {
         duration: 2000,
       });
     });
   }
-
-
   }
 

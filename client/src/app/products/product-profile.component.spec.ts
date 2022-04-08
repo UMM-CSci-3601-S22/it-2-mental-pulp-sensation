@@ -16,12 +16,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 describe('ProductProfileComponent', () => {
   let component: ProductProfileComponent;
   let changeProductForm: FormGroup;
   let fixture: ComponentFixture<ProductProfileComponent>;
   const activatedRoute: ActivatedRouteStub = new ActivatedRouteStub();
+  const expectedProduct: Product = MockProductService.testProducts[0];
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -33,24 +35,29 @@ describe('ProductProfileComponent', () => {
         MatFormFieldModule,
         MatSnackBarModule,
         MatInputModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatSelectModule
       ],
       declarations: [ProductProfileComponent, ProductCardComponent],
       providers: [
         { provide: ProductService, useValue: new MockProductService() },
         { provide: ActivatedRoute, useValue: activatedRoute },
-        {provide: PantryService, useValue: new MockPantryService() },
-        {provide: MatSnackBar, useValue: MatSnackBar }
+        { provide: PantryService, useValue: new MockPantryService() },
+        { provide: MatSnackBar, useValue: MatSnackBar }
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    activatedRoute.setParamMap({ id: expectedProduct._id });
+
     fixture = TestBed.createComponent(ProductProfileComponent);
     component = fixture.componentInstance;
     component.ngOnInit();
     fixture.detectChanges();
+
+
     changeProductForm = component.changeProductForm;
     expect(changeProductForm).toBeDefined();
     expect(changeProductForm.controls).toBeDefined();
@@ -62,7 +69,6 @@ describe('ProductProfileComponent', () => {
   });
 
   it('should navigate to a specific product profile', () => {
-    const expectedProduct: Product = MockProductService.testProducts[0];
     // Setting this should cause anyone subscribing to the paramMap
     // to update. Our `ProductProfileComponent` subscribes to that, so
     // it should update right away.
@@ -73,7 +79,6 @@ describe('ProductProfileComponent', () => {
   });
 
   it('should navigate to correct product when the id parameter changes', () => {
-    let expectedProduct: Product = MockProductService.testProducts[0];
     // Setting this should cause anyone subscribing to the paramMap
     // to update. Our `ProductProfileComponent` subscribes to that, so
     // it should update right away.
@@ -82,7 +87,6 @@ describe('ProductProfileComponent', () => {
     expect(component.id).toEqual(expectedProduct._id);
 
     // Changing the paramMap should update the displayed product profile.
-    expectedProduct = MockProductService.testProducts[1];
     activatedRoute.setParamMap({ id: expectedProduct._id });
 
     expect(component.id).toEqual(expectedProduct._id);
@@ -99,7 +103,6 @@ describe('ProductProfileComponent', () => {
   });
 
   it('should reload the page and keep correct values', () => {
-    const expectedProduct: Product = MockProductService.testProducts[0];
     // Setting this should cause anyone subscribing to the paramMap
     // to update. Our `ProductProfileComponent` subscribes to that, so
     // it should update right away.

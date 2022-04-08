@@ -506,19 +506,120 @@ public class ProductControllerSpec {
     String id = testId.toHexString();
     String testNewProduct = "{"
         + "\"_id\": \"" + id + "\","
-        + "\"threshold\": 100"
+        + "\"threshold\": 100,"
+        + "\"name\": \"Test Product\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
     mockReq.setMethod("PUT");
-
     Context ctx = mockContext("api/products");
+    Context ctx2 = mockContext("api/products", Map.of("id", id));
+    productController.getProduct(ctx2);
+    Product resultProduct1 = returnedSingleProduct(ctx2);
+    assertEquals(3, resultProduct1.threshold);
     productController.changeProduct(ctx);
-
-    Context ctx2 = mockContext("api/products/{id}", Map.of("id", id));
-
     productController.getProduct(ctx2);
     Product resultProduct = returnedSingleProduct(ctx2);
-
     assertEquals(100, resultProduct.threshold);
   }
+
+  @Test
+  public void changeNameTest() throws IOException {
+    String id = testId.toHexString();
+    String testNewProduct = "{"
+        + "\"_id\": \"" + id + "\","
+        + "\"name\": \"bruh\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("PUT");
+    Context ctx = mockContext("api/products");
+    Context ctx2 = mockContext("api/products", Map.of("id", id));
+    productController.getProduct(ctx2);
+    Product resultProduct1 = returnedSingleProduct(ctx2);
+    assertEquals("Test", resultProduct1.name);
+    productController.changeProduct(ctx);
+    productController.getProduct(ctx2);
+    Product resultProduct = returnedSingleProduct(ctx2);
+    assertEquals("bruh", resultProduct.name);
+  }
+
+  @Test
+  public void changeDescriptionTest() throws IOException {
+    String id = testId.toHexString();
+    String testNewProduct = "{"
+        + "\"_id\": \"" + id + "\","
+        + "\"description\": \"bruh\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("PUT");
+    Context ctx = mockContext("api/products");
+    Context ctx2 = mockContext("api/products", Map.of("id", id));
+    productController.getProduct(ctx2);
+    Product resultProduct1 = returnedSingleProduct(ctx2);
+    assertEquals("testing", resultProduct1.description);
+    productController.changeProduct(ctx);
+    productController.getProduct(ctx2);
+    Product resultProduct = returnedSingleProduct(ctx2);
+    assertEquals("bruh", resultProduct.description);
+  }
+
+  @Test
+  public void changeStoreTest() throws IOException {
+    String id = testId.toHexString();
+    String testNewProduct = "{"
+        + "\"_id\": \"" + id + "\","
+        + "\"store\": \"bruh\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("PUT");
+    Context ctx = mockContext("api/products");
+    Context ctx2 = mockContext("api/products", Map.of("id", id));
+    productController.getProduct(ctx2);
+    Product resultProduct1 = returnedSingleProduct(ctx2);
+    assertEquals("testing", resultProduct1.store);
+    productController.changeProduct(ctx);
+    productController.getProduct(ctx2);
+    Product resultProduct = returnedSingleProduct(ctx2);
+    assertEquals("bruh", resultProduct.store);
+  }
+
+  @Test
+  public void changeBrandTest() throws IOException {
+    String id = testId.toHexString();
+    String testNewProduct = "{"
+        + "\"_id\": \"" + id + "\","
+        + "\"brand\": \"bruh\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("PUT");
+    Context ctx = mockContext("api/products");
+    Context ctx2 = mockContext("api/products", Map.of("id", id));
+    productController.getProduct(ctx2);
+    Product resultProduct1 = returnedSingleProduct(ctx2);
+    assertEquals("Test", resultProduct1.brand);
+    productController.changeProduct(ctx);
+    productController.getProduct(ctx2);
+    Product resultProduct = returnedSingleProduct(ctx2);
+    assertEquals("bruh", resultProduct.brand);
+  }
+
+  @Test
+  public void changeNotesTest() throws IOException {
+    String id = testId.toHexString();
+    String testNewProduct = "{"
+        + "\"_id\": \"" + id + "\","
+        + "\"notes\": \"bruh\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("PUT");
+    Context ctx = mockContext("api/products");
+    Context ctx2 = mockContext("api/products", Map.of("id", id));
+    productController.getProduct(ctx2);
+    Product resultProduct1 = returnedSingleProduct(ctx2);
+    assertEquals("We love tests", resultProduct1.notes);
+    productController.changeProduct(ctx);
+    productController.getProduct(ctx2);
+    Product resultProduct = returnedSingleProduct(ctx2);
+    assertEquals("bruh", resultProduct.notes);
+  }
 }
+
