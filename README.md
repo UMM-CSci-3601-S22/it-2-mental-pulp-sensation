@@ -1,4 +1,4 @@
-# CSCI 3601 Iteration Template <!-- omit in toc -->
+# THIS IS NOT A GOOD NAME AND YOU SHOULD FIX IT <!-- omit in toc -->
 
 
 [![Server Build Status](../../actions/workflows/server.yml/badge.svg)](../../actions/workflows/server.yml)
