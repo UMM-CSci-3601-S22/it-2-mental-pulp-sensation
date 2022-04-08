@@ -1,0 +1,143 @@
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+    <app-product-card [product]="this.product"></app-product-card>
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" data-test="openEditDropDown"
+        class="filter-card">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{panelOpenState ? 'Edit Fields':'Edit Fields'}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-card-content fxLayout="column">
+          <div fxLayout="row wrap" fxLayoutGap="10px">
+            <form [formGroup]="changeProductForm" (ngSubmit)="submitForm();">
+              <div>
+                <mat-form-field>
+                  <mat-label>Name</mat-label>
+                  <input matInput placeholder="Name" required formControlName="name" data-test="nameInput">
+                  <mat-error *ngFor="let validation of changeProductFormMessages.name">
+                    <mat-error class="error-message" data-test="nameError"
+                      *ngIf="changeProductForm.get('name').hasError(validation.type) && (changeProductForm.get('name').dirty || changeProductForm.get('name').touched)">
+                      {{validation.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Brand</mat-label>
+                  <input matInput placeholder="Brand" required formControlName="brand" data-test="brandInput">
+                  <mat-error *ngFor="let validation of changeProductFormMessages.brand">
+                    <mat-error class="error-message" data-test="brandError"
+                      *ngIf="changeProductForm.get('brand').hasError(validation.type) && (changeProductForm.get('brand').dirty || changeProductForm.get('brand').touched)">
+                      {{validation.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Store</mat-label>
+                  <mat-select formControlName="store" data-test="storeDropDown">
+                    <mat-option data-test="clickWillies" value="Willies">Willies</mat-option>
+                    <mat-option data-test="clickCoop" value="Pomme de Terre Food Coop">Pomme de Terre Food Coop
+                    </mat-option>
+                    <mat-option data-test="clickOther" value="Other">Other</mat-option>
+                  </mat-select>
+                  <mat-error data-test="storeError" *ngIf="changeProductForm.get('store').hasError('required')">You must
+                    make a
+                    selection</mat-error>
+                  <mat-error
+                    *ngIf="changeProductForm.get('store').hasError('pattern') && !changeProductForm.get('store').hasError('required')">
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Category</mat-label>
+                  <mat-select formControlName="category" data-test="categoryDropDown">
+                    <mat-option data-test="clickGoods" value="Baked Goods">Baked Goods</mat-option>
+                    <mat-option data-test="clickBake" value="Baking Supplies">Baking Supplies</mat-option>
+                    <mat-option data-test="clickBev" value="Beverages">Beverages</mat-option>
+                    <mat-option data-test="clickCleaning" value="Cleaning Products">Cleaning Products</mat-option>
+                    <mat-option data-test="clickDairy" value="Dairy">Dairy</mat-option>
+                    <mat-option data-test="clickDeli" value="Deli">Deli</mat-option>
+                    <mat-option data-test="clickFrozen" value="Frozen Foods">Frozen Foods</mat-option>
+                    <mat-option data-test="clickHerbs" value="Herbs and Spices">Herbs and Spices</mat-option>
+                    <mat-option data-test="clickMeat" value="Meat">Meat</mat-option>
+                    <mat-option data-test="clickPaper" value="Paper Products">Paper Products</mat-option>
+                    <mat-option data-test="clickPet" value="Pet Supplies">Pet Supplies</mat-option>
+                    <mat-option data-test="clickProduce" value="Produce">Produce</mat-option>
+                    <mat-option data-test="clickStaples" value="Staples">Staples</mat-option>
+                    <mat-option data-test="clickToilet" value="Toiletries">Toiletries</mat-option>
+                    <mat-option data-test="clickMisc" value="Miscellaneous>">Miscellaneous</mat-option>
+                  </mat-select>
+                  <mat-error data-test="categoryError" *ngIf="changeProductForm.get('category').hasError('required')">
+                    You must make a
+                    selection</mat-error>
+                  <mat-error
+                    *ngIf="changeProductForm.get('category').hasError('pattern') && !changeProductForm.get('category').hasError('required')">
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Location</mat-label>
+                  <input matInput placeholder="Location" formControlName="location" data-test="locationInput">
+                  <mat-error *ngFor="let validation of changeProductFormMessages.threshold">
+                    <mat-error class="error-message" data-test="locationError"
+                      *ngIf="changeProductForm.get('location').hasError(validation.type) && (changeProductForm.get('location').dirty || changeProductForm.get('location').touched)">
+                      {{validation.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Lifespan</mat-label>
+                  <input matInput placeholder="Lifespan" formControlName="lifespan" data-test="lifespanInput">
+                  <mat-error *ngFor="let validation of changeProductFormMessages.lifespan">
+                    <mat-error class="error-message" data-test="lifespanError"
+                      *ngIf="changeProductForm.get('lifespan').hasError(validation.type) && (changeProductForm.get('lifespan').dirty || changeProductForm.get('lifespan').touched)">
+                      {{validation.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Threshold</mat-label>
+                  <input matInput placeholder="Threshold" formControlName="threshold" data-test="thresholdInput">
+                  <mat-error *ngFor="let validation of changeProductFormMessages.threshold">
+                    <mat-error class="error-message" data-test="thresholdError"
+                      *ngIf="changeProductForm.get('threshold').hasError(validation.type) && (changeProductForm.get('threshold').dirty || changeProductForm.get('threshold').touched)">
+                      {{validation.message}}
+                    </mat-error>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <p style="color:#808080;">Description</p>
+                <textarea matInput placeholder="Description" name="Description" cols="40" rows="5"
+                  formControlName="description" data-test="descriptionInput"></textarea>
+              </div>
+              <div>
+                <p style="color:#808080;">Notes</p>
+                <textarea matInput placeholder="Notes" name="Notes" cols="40" rows="5" formControlName="notes"
+                  data-test="notesInput"></textarea>
+              </div>
+              <mat-card-actions align="start">
+                <button mat-button type="button" color="primary" [disabled]="!changeProductForm.valid" type="submit"
+                  data-test="confirmChange">
+                  Change Product
+                </button>
+              </mat-card-actions>
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

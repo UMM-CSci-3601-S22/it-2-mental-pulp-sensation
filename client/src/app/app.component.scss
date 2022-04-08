@@ -1,0 +1,36 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 256px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.app-title {
+  padding-left: 16px;
+}
+
+.app-title > a:link { text-decoration: none; color: white;}
+
+.app-title > a:visited { text-decoration: none; color: white;}
+
+.app-title > a:hover { text-decoration: none; color: white;}
+
+.app-title> a:active { text-decoration: none; color: white;}
+
+.main-content {
+  margin: 24px;
+  @media (max-width: 599px) {
+    margin: 16px;
+  }
+}

@@ -1,0 +1,37 @@
+<mat-card class="product-card" *ngIf="this.product">
+  <div>
+    <mat-card-header>
+      <mat-card-title class="product-card-name">{{this.product.name}}</mat-card-title>
+    </mat-card-header>
+    <hr>
+  </div>
+  <mat-card-content *ngIf="!this.simple" class="cardInfo">
+    <b>Brand:</b>
+    <p class="product-card-brand">{{this.product.brand}}</p>
+    <b>Store:</b>
+    <p class="product-card-store">{{this.product.store}}</p>
+    <b>Category:</b>
+    <p class="product-card-category">{{this.product.category}}</p>
+    <b>Location:</b>
+    <p class="product-card-location">{{this.product.location}}</p>
+    <b>Lifespan:</b>
+    <p class="product-card-lifespan">{{this.product.lifespan}}</p>
+    <b>Threshold:</b>
+    <p class="product-card-threshold">{{this.product.threshold}}</p>
+    <div>
+      <b>Description:</b>
+      <p class="product-card-description">{{this.product.description}}</p>
+    </div>
+    <div>
+      <b>Notes:</b>
+      <p class="product-card-notes">{{this.product.notes}}</p>
+    </div>
+
+  <div>
+    <button fxFlexOffset.gt-sm="1" mat-fab class="add-pantry-fab" matTooltip="Add a product to pantry" matTooltipPosition="right" data-test="AddPantryButton" (click)="submitProduct(this.product)">
+      <mat-icon class="md-24" aria-label="Add Product To Pantry">add</mat-icon>
+    </button>
+  </div>
+
+  </mat-card-content>
+</mat-card>
